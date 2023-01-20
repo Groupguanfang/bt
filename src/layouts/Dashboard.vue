@@ -7,17 +7,16 @@ import {
   NMenu,
 } from "naive-ui";
 import { ref } from "vue";
-import { useMain } from "@/stores/Main";
-import { useRouter } from "vue-router";
 import { MenuOptions } from "@/components/Menu";
-const router = useRouter();
+import Header from "@/components/Header.vue";
 const collapsed = ref(false);
-const main = useMain();
 </script>
 
 <template>
   <NLayout content-style="height: 100vh">
-    <NLayoutHeader id="header"> </NLayoutHeader>
+    <NLayoutHeader id="header">
+      <Header />
+    </NLayoutHeader>
     <NLayout has-sider id="content-container">
       <NLayoutSider
         show-trigger
