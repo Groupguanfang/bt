@@ -14,7 +14,7 @@ const collapsed = ref(false);
 
 <template>
   <NLayout content-style="height: 100vh">
-    <NLayoutHeader id="header">
+    <NLayoutHeader id="header" bordered>
       <Header />
     </NLayoutHeader>
     <NLayout has-sider id="content-container">
@@ -24,11 +24,14 @@ const collapsed = ref(false);
         :collapsed="collapsed"
         @collapse="collapsed = true"
         @expand="collapsed = false"
+        :collapsed-width="60"
+        bordered
       >
         <NMenu
           default-value="dashboard"
           :options="MenuOptions"
           :collapsed="collapsed"
+          :collapsed-width="60"
           accordion
         />
       </NLayoutSider>
@@ -47,7 +50,6 @@ const collapsed = ref(false);
   z-index: 999;
   height: 50px;
   width: 100%;
-  padding: 7px;
 }
 #content-container {
   height: calc(100% - 50px);

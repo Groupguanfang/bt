@@ -3,7 +3,9 @@ import i18n from "@/i18n";
 import { useMain } from "@/stores/Main";
 import { getSystemTotal, getDiskInfo, getNetWork } from "@/apis";
 import { onMounted, ref, type Ref } from "vue";
-import { NCard, NH4, NProgress, NSpace } from "naive-ui";
+import { NCard, NGrid, NGi, NH4, NProgress, NSpace } from "naive-ui";
+import UpdateCard from "@/components/UpdateCard.vue";
+
 const main = useMain();
 const cpuCores = ref();
 const cpuPercentage = ref(0);
@@ -115,18 +117,34 @@ onMounted(async () => {
       </NProgress>
     </NSpace>
     <NSpace vertical>
-      <NCard class="disk_container" :title="language.diskInfomation">
-        <div class="disk" :key="index" v-for="(item, index) in diskPercentage">
-          <NProgress processing :percentage="item.size[3]" status="success">
-            {{ item.filesystem }}
-            {{ item.size[3] }}%
-          </NProgress>
-          <NSpace justify="space-between">
-            <div>文件系统：{{ item.type }}</div>
-            <div>Inode使用率: {{ item.inodes[3] }}</div>
-          </NSpace>
-        </div>
-      </NCard>
+      <NGrid
+        x-gap="14"
+        y-gap="14"
+        cols="1 s:1 m:2 l:3 xl:4 2xl:5"
+        responsive="screen"
+      >
+        <NGi>
+          <NCard class="disk_container" :title="language.diskInfomation">
+            <div
+              class="disk"
+              :key="index"
+              v-for="(item, index) in diskPercentage"
+            >
+              <NProgress processing :percentage="item.size[3]" status="success">
+                {{ item.filesystem }}
+                {{ item.size[3] }}%
+              </NProgress>
+              <NSpace justify="space-between">
+                <div>文件系统：{{ item.type }}</div>
+                <div>Inode使用率: {{ item.inodes[3] }}</div>
+              </NSpace>
+            </div>
+          </NCard>
+        </NGi>
+        <NGi>
+          <UpdateCard />
+        </NGi>
+      </NGrid>
     </NSpace>
   </NSpace>
 </template>

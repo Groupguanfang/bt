@@ -20,3 +20,10 @@ export async function getNetWork(baseURL: string, token: string) {
     url: "/system?action=GetNetWork",
   });
 }
+
+export async function updatePanel(baseURL: string, token: string) {
+  const instance = request(baseURL, token);
+  return await instance({
+    url: "/ajax?action=UpdatePanel",
+  });
+}

@@ -1,5 +1,24 @@
 <script setup lang="ts">
-import { NButton } from "naive-ui";
+import { NButton, NIcon, NSpace } from "naive-ui";
+import { AppSwitcher } from "@vicons/carbon";
 </script>
 
-<template><NButton>服务器列表</NButton></template>
+<template>
+  <NSpace align="center" class="header_container">
+    <NButton type="primary" circle @click="$router.push('/servers')">
+      <template #icon>
+        <NIcon>
+          <AppSwitcher />
+        </NIcon>
+      </template>
+    </NButton>
+  </NSpace>
+</template>
+
+<style scoped>
+.header_container {
+  height: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+</style>
