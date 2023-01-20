@@ -19,13 +19,14 @@ const status = ref(false);
 const isShow = ref("");
 const msg: Ref<{
   updateMsg?: string;
+  version?: string;
 }> = ref({});
 onMounted(async () => {
   const update = await updatePanel(
     <string>main.now?.ip,
     <string>main.now?.token
   );
-  //status.value = update.data.status;
+  status.value = update.data.status;
   if (update.data.status) {
     isShow.value = "新";
     msg.value = update.data.msg;
@@ -38,7 +39,9 @@ onMounted(async () => {
     <NAlert
       :type="status ? 'info' : 'success'"
       class="max net_container"
-      :title="language.updateTitle"
+      :title="
+        language.updateTitle + ' ' + (msg.version ? 'v' + msg.version : '')
+      "
     >
       <NSpace v-if="status" vertical>
         <NScrollbar style="max-height: 80px">

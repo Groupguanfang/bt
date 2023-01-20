@@ -11,6 +11,7 @@ import {
   NLayout,
   NModal,
   NSpace,
+  useMessage,
 } from "naive-ui";
 import { Add } from "@vicons/carbon";
 import { useMain } from "@/stores/Main";
@@ -19,6 +20,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 const main = useMain();
 const router = useRouter();
+const message = useMessage();
 const language = ref();
 
 /**
@@ -31,6 +33,11 @@ const checkLang = () =>
 const lang = () => {
   main.changeLang();
   checkLang();
+  if (main.locale === "zh") {
+    message.warning("您已更改语言 请刷新页面获得更好的效果");
+  } else {
+    message.warning("Please refresh Page to have a good view");
+  }
 };
 // 开盘先初始化
 checkLang();
