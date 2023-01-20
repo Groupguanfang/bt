@@ -17,7 +17,7 @@ const main = useMain();
 
 const PHPdata = ref();
 onMounted(async () => {
-  const Pdata = await getPHP(<string>main.now?.ip, <string>main.now?.token);
+  const Pdata = await getPHP(<string>main.now?.ip, <string>main.now?.token, {});
   PHPdata.value = Pdata.data.data;
 });
 </script>
