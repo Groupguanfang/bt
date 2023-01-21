@@ -22,7 +22,9 @@ const columns: DataTableColumns = [
     key: "action",
     render(row) {
       if (row.type === "文件夹") {
-        return <NButton>打开</NButton>;
+        return (
+          <NButton onClick={() => file.push(row.name as string)}>打开</NButton>
+        );
       } else {
         return <NButton>编辑</NButton>;
       }
@@ -37,17 +39,20 @@ onMounted(async () => {
     main.now?.token as string,
     file.path
   );
-  const DIR = data.data.DIR.map((item: string) => {
+  data.data.DIR.map((item: string) => {
     const i = item.split(";");
     datas.value.push({
       name: i[0],
       type: "文件夹",
     });
   });
-  const FILES = data.data.FILES.map((item: string) => {
-    return item.split(";");
+  data.data.FILES.map((item: string) => {
+    const i = item.split(";");
+    datas.value.push({
+      name: i[0],
+      type: "文件",
+    });
   });
-  console.log(DIR);
 });
 </script>
 
