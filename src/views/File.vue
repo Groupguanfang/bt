@@ -1,9 +1,9 @@
-<script setup lang="ts">
+<script setup lang="tsx">
 import { getDir } from "@/apis";
 import { useFile } from "@/stores/File";
 import { useMain } from "@/stores/Main";
-import { NDataTable, NSpace, type DataTableColumns } from "naive-ui";
-import { onMounted, ref, type Ref } from "vue";
+import { NDataTable, NSpace, NButton, type DataTableColumns } from "naive-ui";
+import { h, onMounted, ref, type Ref } from "vue";
 
 const file = useFile();
 const main = useMain();
@@ -14,32 +14,34 @@ const columns: DataTableColumns = [
     key: "name",
   },
   {
-    title: "格式",
-    key: "format",
+    title: "类型",
+    key: "type",
   },
   {
-    title: "权限",
-    key: "control",
-  },
-  {
-    title: "备注",
-    key: "info",
+    title: "操作",
+    key: "action",
+    render(row) {
+      if (row.type === "文件夹") {
+        return <NButton>打开</NButton>;
+      } else {
+        return <NButton>编辑</NButton>;
+      }
+    },
   },
 ];
 const datas: Ref<Array<any>> = ref([]);
 
 onMounted(async () => {
   const data = await getDir(
-    <string>main.now?.ip,
-    <string>main.now?.token,
+    main.now?.ip as string,
+    main.now?.token as string,
     file.path
   );
   const DIR = data.data.DIR.map((item: string) => {
     const i = item.split(";");
     datas.value.push({
       name: i[0],
-      info: i[10],
-      control: i[3],
+      type: "文件夹",
     });
   });
   const FILES = data.data.FILES.map((item: string) => {
@@ -52,6 +54,6 @@ onMounted(async () => {
 <template>
   <NSpace vertical>
     {{ file.path }}
-    <NDataTable :columns="columns" :data="datas" />
+    <NDataTable size="large" :columns="columns" :data="datas" />
   </NSpace>
 </template>
