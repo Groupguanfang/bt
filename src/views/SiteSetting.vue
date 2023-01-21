@@ -1,7 +1,18 @@
 <script setup lang="ts">
 import { getDomain, getPHP } from "@/apis";
 import { useMain } from "@/stores/Main";
-import { NButton, NDivider, NH1, NList, NListItem, NCard } from "naive-ui";
+import {
+  NButton,
+  NDivider,
+  NH1,
+  NH6,
+  NGi,
+  NCard,
+  NGrid,
+  NText,
+  NTabs,
+  NTabPane,
+} from "naive-ui";
 import { onMounted, ref, type Ref } from "vue";
 import { useRoute } from "vue-router";
 
@@ -10,7 +21,11 @@ const main = useMain();
 const id = route.params.id;
 
 const domain = ref([]);
-const site: Ref<any> = ref({});
+const site: Ref<any> = ref({
+  ssl: {
+    dns: [],
+  },
+});
 onMounted(async () => {
   // 域名
   const domains = await getDomain(
@@ -36,17 +51,49 @@ onMounted(async () => {
 <template>
   <div>
     <NH1 class="nopad">{{ site.name }}</NH1>
-    <NDivider class="divider" />
-    <NCard title="php版本">
-      {{ site.php_version }}
-      <template #header-extra>
-        <NButton>更改</NButton>
-      </template>
-    </NCard>
-    
-    <NCard title="SSL">
-      {{ site.ssl }}
-    </NCard>
+    <NTabs size="large">
+      <NTabPane name="概览">
+        <NGrid
+          responsive="screen"
+          y-gap="14"
+          x-gap="14"
+          cols="1 s:1 m:2 l:4 xl:5 2xl:6"
+        >
+          <NGi>
+            <NCard title="php版本">
+              {{ site.php_version }}
+              <template #header-extra>
+                <NButton>更改</NButton>
+              </template>
+            </NCard>
+          </NGi>
+          <NGi>
+            <NCard title="SSL">
+              <template #header-extra>
+                <NButton>设置</NButton>
+              </template>
+              <NH6>品牌</NH6>
+              <NText>{{ site.ssl.issuer }}</NText>
+              <NH6>授权域名</NH6>
+              <NButton
+                v-for="(item, index) in site['ssl']['dns']"
+                tag="a"
+                text
+                target="_blank"
+                typ="primary"
+                :key="index"
+                :href="'//' + item"
+              >
+                {{ item }}
+              </NButton>
+            </NCard>
+          </NGi>
+        </NGrid>
+      </NTabPane>
+      <NTabPane name="php版本"> </NTabPane>
+      <NTabPane name="SSL"> </NTabPane>
+      <NTabPane name="反向代理"> </NTabPane>
+    </NTabs>
   </div>
 </template>
 

@@ -29,3 +29,4 @@ export async function updatePanel(baseURL: string, token: string) {
 }
 
 export * from "./Site";
+export * from "./File";

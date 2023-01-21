@@ -10,6 +10,10 @@ export default (baseURL: string, token: string) => {
       request_time: time,
       request_token: md5(time + md5(token)),
     },
+    headers: {
+      "Content-Type": "x-www-form-urlencoded",
+    },
+    withCredentials: true,
   });
   return instance;
 };
