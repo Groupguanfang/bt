@@ -10,11 +10,21 @@ import {
   NDivider,
   useDialog,
   NInput,
+  NModal,
 } from "naive-ui";
+import {
+  h,
+  watch,
+  computed,
+  onMounted,
+  ref,
+  type Ref,
+  type Component,
+} from "vue";
 import { getDir, createDir, deleteDir, createFile } from "@/apis";
 import { useFile } from "@/stores/File";
 import { useMain } from "@/stores/Main";
-import { watch, computed, onMounted, ref, type Ref } from "vue";
+
 import {
   Folder,
   Document,
@@ -22,6 +32,7 @@ import {
   ChevronLeft,
   FolderAdd,
   DocumentAdd,
+  Delete,
 } from "@vicons/carbon";
 
 const file = useFile();
@@ -75,6 +86,12 @@ watch(watchPath, async () => {
 });
 
 /**
+ * 更多操作
+ */
+let nowOperation = {};
+const isShowOperation = ref(false);
+
+/**
  * 列配置
  */
 const columns: DataTableColumns = [
@@ -121,7 +138,7 @@ const columns: DataTableColumns = [
     width: 100,
     render(row) {
       return (
-        <NButton type="info" onClick={() => deleteFile(row.name as string)}>
+        <NButton type="info" onClick={() => (nowOperation = row)}>
           {{
             icon: () => (
               <NIcon>
@@ -210,9 +227,6 @@ const deleteFile = (fileName: string) => {
 /**
  * 新增文件
  */
-/**
- * 新建文件夹
- */
 const newFileName = ref("");
 const newFile = () => {
   const newFileDialog = dialog.info({
@@ -279,6 +293,11 @@ const newFile = () => {
       :columns="columns"
       :data="datas"
     />
+    <NModal
+      v-model:show="isShowOperation"
+      preset="card"
+      title="更多操作"
+    ></NModal>
   </NSpace>
 </template>
 
