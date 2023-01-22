@@ -21,7 +21,7 @@ import {
   type Ref,
   type Component,
 } from "vue";
-import { getDir, createDir, deleteDir, createFile } from "@/apis";
+import { getDir, createDir, deleteDir, deleteFile, createFile } from "@/apis";
 import { useFile } from "@/stores/File";
 import { useMain } from "@/stores/Main";
 
@@ -62,7 +62,7 @@ const getData = async () => {
     const i = item.split(";");
     datas.value.push({
       name: i[0],
-      type: "文件夹",
+      type: "folder",
     });
   });
   // 遍历FILES
@@ -70,7 +70,7 @@ const getData = async () => {
     const i = item.split(";");
     datas.value.push({
       name: i[0],
-      type: "文件",
+      type: "file",
     });
   });
   // 加载完成
@@ -88,7 +88,10 @@ watch(watchPath, async () => {
 /**
  * 更多操作
  */
-let nowOperation = {};
+let nowOperation = {
+  name: "",
+  path: "",
+};
 const isShowOperation = ref(false);
 
 /**
@@ -138,7 +141,13 @@ const columns: DataTableColumns = [
     width: 100,
     render(row) {
       return (
-        <NButton type="info" onClick={() => (nowOperation = row)}>
+        <NButton
+          type="info"
+          onClick={() => {
+            nowOperation = row;
+            isShowOperation.value = !isShowOperation.value;
+          }}
+        >
           {{
             icon: () => (
               <NIcon>
@@ -200,28 +209,52 @@ const newFolder = () => {
 /**
  * 删除文件
  */
-const deleteFile = (fileName: string) => {
-  const deleteDialog = dialog.warning({
-    title: "删除确认",
-    content: "确认删除这个文件吗？请三思！",
-    positiveText: "好",
-    negativeText: "取消",
-    onPositiveClick: () => {
-      return new Promise(async (resolve) => {
-        deleteDialog.loading = true;
-        const deleter = await deleteDir(
-          main.now?.ip as string,
-          main.now?.token as string,
-          file.path + "/" + fileName
-        );
-        deleter.data.status
-          ? message.success(deleter.data.msg)
-          : message.warning(deleter.data.msg);
-        getData();
-        resolve(deleter);
-      });
-    },
-  });
+const deleter = (type: "folder" | "file", fileName: string) => {
+  if (type === "file") {
+    const deleteDialog = dialog.warning({
+      title: "删除确认",
+      content: "确认删除这个文件吗？请三思！",
+      positiveText: "好",
+      negativeText: "取消",
+      onPositiveClick: () => {
+        return new Promise(async (resolve) => {
+          deleteDialog.loading = true;
+          const deleter = await deleteFile(
+            main.now?.ip as string,
+            main.now?.token as string,
+            file.path + "/" + fileName
+          );
+          deleter.data.status
+            ? message.success(deleter.data.msg)
+            : message.warning(deleter.data.msg);
+          getData();
+          resolve(deleter);
+        });
+      },
+    });
+  } else if (type === "folder") {
+    const deleteDialog = dialog.warning({
+      title: "删除确认",
+      content: "确认删除这个文件夹吗？请三思！",
+      positiveText: "好",
+      negativeText: "取消",
+      onPositiveClick: () => {
+        return new Promise(async (resolve) => {
+          deleteDialog.loading = true;
+          const deleter = await deleteDir(
+            main.now?.ip as string,
+            main.now?.token as string,
+            file.path + "/" + fileName
+          );
+          deleter.data.status
+            ? message.success(deleter.data.msg)
+            : message.warning(deleter.data.msg);
+          getData();
+          resolve(deleter);
+        });
+      },
+    });
+  }
 };
 
 /**
@@ -293,11 +326,14 @@ const newFile = () => {
       :columns="columns"
       :data="datas"
     />
-    <NModal
-      v-model:show="isShowOperation"
-      preset="card"
-      title="更多操作"
-    ></NModal>
+    <NModal v-model:show="isShowOperation" preset="card" title="更多操作">
+      <NButton @click="deleter(nowOperation.type, nowOperation.name)">
+        删除
+        <template #icon>
+          <NIcon><Delete /></NIcon>
+        </template>
+      </NButton>
+    </NModal>
   </NSpace>
 </template>
 

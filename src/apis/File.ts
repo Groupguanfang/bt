@@ -69,3 +69,14 @@ export async function deleteDir(baseURL: string, token: string, path: string) {
     },
   });
 }
+
+export async function deleteFile(baseURL: string, token: string, path: string) {
+  const instance = request(baseURL, token);
+  return await instance({
+    url: "/files?action=DeleteFile",
+    params: { path },
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+    },
+  });
+}
