@@ -24,9 +24,9 @@ const router = createRouter({
           component: () => import("./views/Site.vue"),
         },
         {
-          path: "/dashboard/site/setting/:id",
-          name: "siteSetting",
-          component: () => import("./views/SiteSetting.vue"),
+          path: "/dashboard/site/php/:id",
+          name: "phpSetting",
+          component: () => import("./views/PHPSetting.vue"),
         },
         {
           path: "/dashboard/database",

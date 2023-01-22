@@ -11,6 +11,7 @@ specifiers:
   '@vue/tsconfig': ^0.1.3
   axios: ^1.2.3
   baota: ^0.2.1
+  eruda: ^2.11.0
   eslint: ^8.22.0
   eslint-plugin-vue: ^9.3.0
   md5-node: ^1.0.1
@@ -31,6 +32,7 @@ dependencies:
   '@vicons/carbon': 0.12.0
   axios: 1.2.3
   baota: 0.2.1
+  eruda: 2.11.0
   md5-node: 1.0.1
   pinia: 2.0.29_e7lp6ggkpgyi5vqd44m2kxvk6i
   pinia-plugin-persist: 1.0.0_pinia@2.0.29+vue@3.2.45
@@ -1429,6 +1431,10 @@ packages:
     dependencies:
       is-arrayish: 0.2.1
     dev: true
+
+  /eruda/2.11.0:
+    resolution: {integrity: sha512-uK+1Gv1ou+GjIPk2MS/6SIkTIgcrZCgemwbS3rmTRL7KLT360zyuRDKIVg4zHaagxHivzQRpJxWlw/tFMRmf+g==}
+    dev: false
 
   /es-abstract/1.21.1:
     resolution: {integrity: sha512-QudMsPOz86xYz/1dG1OuGBKOELjCh99IIWHLzy5znUB6j8xG2yMA7bfTV86VSqKF+Y/H08vQPR+9jyXpuC6hfg==}

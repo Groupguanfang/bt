@@ -15,7 +15,7 @@ import {
   NTabPane,
   NList,
   NListItem,
-  NSpace
+  NSpace,
 } from "naive-ui";
 import { onMounted, ref, type Ref } from "vue";
 import { useRoute } from "vue-router";
@@ -55,7 +55,7 @@ onMounted(async () => {
 <template>
   <div>
     <NH1 class="nopad">{{ site.name }}</NH1>
-    <NTabs size="large">
+    <NTabs size="large" animated>
       <NTabPane name="概览">
         <NGrid
           responsive="screen"

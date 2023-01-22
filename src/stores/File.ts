@@ -18,12 +18,17 @@ export const useFile = defineStore("file", {
       if (this.path === "/") {
         this.path = this.path + path;
       } else {
-        this.path = this.path + "/" + path
+        this.path = this.path + "/" + path;
       }
     },
-    back() {
-      this.path = this.history[this.history.length - 1];
-      this.history.pop();
+    back(): boolean {
+      if (this.history.length - 1 == -1) {
+        return false;
+      } else {
+        this.path = this.history[this.history.length - 1];
+        this.history.pop();
+        return true;
+      }
     },
   },
   persist: {

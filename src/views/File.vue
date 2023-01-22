@@ -1,21 +1,52 @@
 <script setup lang="tsx">
-import { getDir } from "@/apis";
+import {
+  NDataTable,
+  NSpace,
+  NH1,
+  NButton,
+  type DataTableColumns,
+  NIcon,
+  useMessage,
+  NDivider,
+  useDialog,
+  NInput,
+} from "naive-ui";
+import { getDir, createDir, deleteDir, createFile } from "@/apis";
 import { useFile } from "@/stores/File";
 import { useMain } from "@/stores/Main";
-import { NDataTable, NSpace, NButton, type DataTableColumns } from "naive-ui";
 import { watch, computed, onMounted, ref, type Ref } from "vue";
+import {
+  Folder,
+  Document,
+  Settings,
+  ChevronLeft,
+  FolderAdd,
+  DocumentAdd,
+} from "@vicons/carbon";
 
 const file = useFile();
 const main = useMain();
-const tableLoading = ref(true)
+const message = useMessage();
+const dialog = useDialog();
+
+const tableLoading = ref(true);
+const datas: Ref<Array<any>> = ref([]);
+
+/**
+ * 获取数据
+ */
 const getData = async () => {
-  tableLoading.value = true
-  datas.value = []
+  // 加载中
+  tableLoading.value = true;
+  // 数组恢复默认状态
+  datas.value = [];
+  // 获取数据
   const data = await getDir(
     main.now?.ip as string,
     main.now?.token as string,
     file.path
   );
+  // 遍历DIR
   data.data.DIR.map((item: string) => {
     const i = item.split(";");
     datas.value.push({
@@ -23,6 +54,7 @@ const getData = async () => {
       type: "文件夹",
     });
   });
+  // 遍历FILES
   data.data.FILES.map((item: string) => {
     const i = item.split(";");
     datas.value.push({
@@ -30,48 +62,231 @@ const getData = async () => {
       type: "文件",
     });
   });
-  tableLoading.value = false
-}
+  // 加载完成
+  tableLoading.value = false;
+};
 
-const watchPath = computed(() => file.path)
+/**
+ * 监听store
+ */
+const watchPath = computed(() => file.path);
 watch(watchPath, async () => {
-  await getData()
-})
+  await getData();
+});
 
+/**
+ * 列配置
+ */
 const columns: DataTableColumns = [
   {
     title: "名称",
     key: "name",
-  },
-  {
-    title: "类型",
-    key: "type",
-  },
-  {
-    title: "操作",
-    key: "action",
     render(row) {
       if (row.type === "文件夹") {
         return (
-          <NButton size="small" onClick={() => file.push(row.name as string)}>打开</NButton>
+          <NButton
+            text
+            size="small"
+            onClick={() => file.push(row.name as string)}
+          >
+            {{
+              default: () => row.name,
+              icon: () => (
+                <NIcon>
+                  <Folder />
+                </NIcon>
+              ),
+            }}
+          </NButton>
         );
       } else {
-        return <NButton size="small">编辑</NButton>;
+        return (
+          <NButton text>
+            {{
+              default: () => row.name,
+              icon: () => (
+                <NIcon>
+                  <Document />
+                </NIcon>
+              ),
+            }}
+          </NButton>
+        );
       }
     },
   },
+  {
+    key: "operation",
+    fixed: "right",
+    width: 100,
+    render(row) {
+      return (
+        <NButton type="info" onClick={() => deleteFile(row.name as string)}>
+          {{
+            icon: () => (
+              <NIcon>
+                <Settings />
+              </NIcon>
+            ),
+            default: () => "操作",
+          }}
+        </NButton>
+      );
+    },
+  },
 ];
-const datas: Ref<Array<any>> = ref([]);
 
-onMounted(async () => {
-  await getData()
-});
+/**
+ * 生命周期钩子
+ */
+onMounted(async () => await getData());
+
+/**
+ * 后退钩子 写个三元装个b 实际上没卵用
+ */
+const back = () => (file.back() ? "" : message.warning("已经是根目录了"));
+
+/**
+ * 新建文件夹
+ */
+const newFolderName = ref("");
+const newFolder = () => {
+  const newFolderDialog = dialog.info({
+    title: "新建文件夹",
+    positiveText: "好",
+    negativeText: "取消",
+    onPositiveClick: () => {
+      return new Promise(async (resolve) => {
+        newFolderDialog.loading = true;
+        const newer = await createDir(
+          main.now?.ip as string,
+          main.now?.token as string,
+          file.path + "/" + newFolderName.value
+        );
+        newer.data.status
+          ? message.success(newer.data.msg)
+          : message.warning(newer.data.msg);
+        getData();
+        resolve(newer);
+      });
+    },
+    content: () => (
+      <NInput
+        size="large"
+        v-model:value={newFolderName.value}
+        placeholder="请输入文件夹名称"
+      />
+    ),
+  });
+};
+
+/**
+ * 删除文件
+ */
+const deleteFile = (fileName: string) => {
+  const deleteDialog = dialog.warning({
+    title: "删除确认",
+    content: "确认删除这个文件吗？请三思！",
+    positiveText: "好",
+    negativeText: "取消",
+    onPositiveClick: () => {
+      return new Promise(async (resolve) => {
+        deleteDialog.loading = true;
+        const deleter = await deleteDir(
+          main.now?.ip as string,
+          main.now?.token as string,
+          file.path + "/" + fileName
+        );
+        deleter.data.status
+          ? message.success(deleter.data.msg)
+          : message.warning(deleter.data.msg);
+        getData();
+        resolve(deleter);
+      });
+    },
+  });
+};
+
+/**
+ * 新增文件
+ */
+/**
+ * 新建文件夹
+ */
+const newFileName = ref("");
+const newFile = () => {
+  const newFileDialog = dialog.info({
+    title: "新建文件",
+    positiveText: "好",
+    negativeText: "取消",
+    onPositiveClick: () => {
+      return new Promise(async (resolve) => {
+        newFileDialog.loading = true;
+        const newer = await createFile(
+          main.now?.ip as string,
+          main.now?.token as string,
+          file.path + "/" + newFileName.value
+        );
+        newer.data.status
+          ? message.success(newer.data.msg)
+          : message.warning(newer.data.msg);
+        getData();
+        resolve(newer);
+      });
+    },
+    content: () => (
+      <NInput
+        size="large"
+        v-model:value={newFileName.value}
+        placeholder="请输入文件名称"
+      />
+    ),
+  });
+};
 </script>
 
 <template>
   <NSpace vertical>
+    <NH1 class="nopad-bottom">文件</NH1>
     {{ file.path }}
-    <NButton @click="file.back">后退</NButton>
-    <NDataTable :loading="tableLoading" size="large" :columns="columns" :data="datas" />
+    <NDivider class="nopad-bottom nopad-top" />
+    <NSpace>
+      <NButton circle @click="back">
+        <template #icon>
+          <NIcon>
+            <ChevronLeft />
+          </NIcon>
+        </template>
+      </NButton>
+      <NButton circle @click="newFolder">
+        <template #icon>
+          <NIcon>
+            <FolderAdd />
+          </NIcon>
+        </template>
+      </NButton>
+      <NButton circle @click="newFile">
+        <template #icon>
+          <NIcon>
+            <DocumentAdd />
+          </NIcon>
+        </template>
+      </NButton>
+    </NSpace>
+    <NDataTable
+      :loading="tableLoading"
+      size="large"
+      :columns="columns"
+      :data="datas"
+    />
   </NSpace>
 </template>
+
+<style scoped>
+.nopad-bottom {
+  margin-bottom: 0;
+}
+.nopad-top {
+  margin-top: 0;
+}
+</style>

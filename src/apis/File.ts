@@ -37,15 +37,35 @@ export async function saveFileBody(
   });
 }
 
-export async function createFile(
-  baseURL: string,
-  token: string,
-  path: string
-) {
+export async function createFile(baseURL: string, token: string, path: string) {
   const instance = request(baseURL, token);
   return await instance({
     url: "/files?action=CreateFile",
-    data: { path },
+    params: { path },
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+    },
   });
 }
 
+export async function createDir(baseURL: string, token: string, path: string) {
+  const instance = request(baseURL, token);
+  return await instance({
+    url: "/files?action=CreateDir",
+    params: { path },
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+    },
+  });
+}
+
+export async function deleteDir(baseURL: string, token: string, path: string) {
+  const instance = request(baseURL, token);
+  return await instance({
+    url: "/files?action=DeleteDir",
+    params: { path },
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+    },
+  });
+}
