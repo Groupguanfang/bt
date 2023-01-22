@@ -88,10 +88,7 @@ watch(watchPath, async () => {
 /**
  * 更多操作
  */
-let nowOperation = {
-  name: "",
-  path: "",
-};
+let nowOperation: { name?: string; path?: string } = {};
 const isShowOperation = ref(false);
 
 /**
@@ -228,6 +225,9 @@ const deleter = (type: "folder" | "file", fileName: string) => {
             ? message.success(deleter.data.msg)
             : message.warning(deleter.data.msg);
           getData();
+          // 关闭模态框
+          isShowOperation.value = false;
+          nowOperation = {};
           resolve(deleter);
         });
       },
@@ -250,6 +250,9 @@ const deleter = (type: "folder" | "file", fileName: string) => {
             ? message.success(deleter.data.msg)
             : message.warning(deleter.data.msg);
           getData();
+          // 关闭模态框
+          isShowOperation.value = false;
+          nowOperation = {};
           resolve(deleter);
         });
       },
