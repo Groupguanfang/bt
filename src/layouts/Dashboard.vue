@@ -6,10 +6,14 @@ import {
   NLayoutSider,
   NMenu,
 } from "naive-ui";
-import { ref } from "vue";
+import { ref, computed, watch } from "vue";
 import { MenuOptions } from "@/components/Menu";
 import Header from "@/components/Header.vue";
-const collapsed = ref(false);
+import { useMain } from "@/stores/Main"
+const main = useMain()
+const collapsed = ref(main.isCollapsed);
+const sider = computed(() => main.showSider)
+watch(collapsed, () => main.isCollapsed = collapsed.value)
 </script>
 
 <template>
@@ -26,6 +30,7 @@ const collapsed = ref(false);
         @expand="collapsed = false"
         :collapsed-width="60"
         bordered
+        v-if="sider"
       >
         <NMenu
           default-value="dashboard"

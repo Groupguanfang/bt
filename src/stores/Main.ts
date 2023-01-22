@@ -10,6 +10,8 @@ interface state {
     ip?: string;
     token?: string;
   };
+  isCollapsed: boolean
+  showSider: boolean
 }
 
 export const useMain = defineStore("counter", {
@@ -18,6 +20,8 @@ export const useMain = defineStore("counter", {
       account: [],
       locale: "zh",
       now: {},
+      isCollapsed: false,
+      showSider: true
     };
   },
   actions: {
@@ -28,6 +32,12 @@ export const useMain = defineStore("counter", {
         this.locale = "zh";
       }
     },
+    changeSider() {
+      this.showSider = !this.showSider
+    },
+    changeCollapsed() {
+      this.isCollapsed = !this.isCollapsed
+    }
   },
   persist: {
     enabled: true,

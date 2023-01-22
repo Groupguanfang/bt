@@ -14,8 +14,12 @@ export const useFile = defineStore("file", {
   },
   actions: {
     push(path: string) {
-      this.path = this.path + path;
       this.history.push(this.path);
+      if (this.path === "/") {
+        this.path = this.path + path;
+      } else {
+        this.path = this.path + "/" + path
+      }
     },
     back() {
       this.path = this.history[this.history.length - 1];

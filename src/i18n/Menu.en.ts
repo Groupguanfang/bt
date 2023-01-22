@@ -1,6 +1,6 @@
 export default {
-  dashboard: "Home",
-  site: "Website",
+  dashboard: "Dashboard",
+  site: "Project",
   database: "Database",
   file: "File",
   store: "Store",

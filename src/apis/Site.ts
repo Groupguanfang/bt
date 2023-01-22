@@ -22,3 +22,19 @@ export async function getDomain(baseURL: string, token: string, config: any) {
     params: config,
   });
 }
+
+export async function GetDirUserINI(baseURL: string, token: string, id: number) {
+  const instance = request(baseURL, token);
+  return await instance({
+    url: "/site?action=GetDirUserINI",
+    params: { id }
+  });
+}
+
+export async function SetDirUserINI(baseURL: string, token: string, path: string) {
+  const instance = request(baseURL, token);
+  return await instance({
+    url: "/site?action=SetDirUserINI",
+    params: { path }
+  });
+}

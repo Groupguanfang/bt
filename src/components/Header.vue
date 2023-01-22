@@ -1,6 +1,10 @@
 <script setup lang="ts">
+import { computed } from "vue"
 import { NButton, NIcon, NSpace } from "naive-ui";
-import { AppSwitcher } from "@vicons/carbon";
+import { AppSwitcher, TextAlignLeft, TextAlignRight } from "@vicons/carbon";
+import { useMain } from "@/stores/Main"
+const main = useMain()
+const watchSider = computed(() => main.showSider)
 </script>
 
 <template>
@@ -9,6 +13,14 @@ import { AppSwitcher } from "@vicons/carbon";
       <template #icon>
         <NIcon>
           <AppSwitcher />
+        </NIcon>
+      </template>
+    </NButton>
+    <NButton circle @click="main.changeSider">
+      <template #icon>
+        <NIcon>
+          <TextAlignLeft v-if="watchSider" />
+          <TextAlignRight v-if="!watchSider" />
         </NIcon>
       </template>
     </NButton>

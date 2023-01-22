@@ -10,8 +10,12 @@ import {
   NCard,
   NGrid,
   NText,
+  NTag,
   NTabs,
   NTabPane,
+  NList,
+  NListItem,
+  NSpace
 } from "naive-ui";
 import { onMounted, ref, type Ref } from "vue";
 import { useRoute } from "vue-router";
@@ -60,6 +64,18 @@ onMounted(async () => {
           cols="1 s:1 m:2 l:4 xl:5 2xl:6"
         >
           <NGi>
+            <NCard title="操作">
+              <NList>
+                <NListItem>
+                  <NSpace align="center" justify="space-between">
+                    <NText>网站状态</NText>
+                    <NButton type="error">停用</NButton>
+                  </NSpace>
+                </NListItem>
+              </NList>
+            </NCard>
+          </NGi>
+          <NGi>
             <NCard title="php版本">
               {{ site.php_version }}
               <template #header-extra>
@@ -75,17 +91,14 @@ onMounted(async () => {
               <NH6>品牌</NH6>
               <NText>{{ site.ssl.issuer }}</NText>
               <NH6>授权域名</NH6>
-              <NButton
+              <NTag
                 v-for="(item, index) in site['ssl']['dns']"
-                tag="a"
-                text
-                target="_blank"
-                typ="primary"
                 :key="index"
-                :href="'//' + item"
+                :bordered="false"
+                type="primary"
               >
                 {{ item }}
-              </NButton>
+              </NTag>
             </NCard>
           </NGi>
         </NGrid>

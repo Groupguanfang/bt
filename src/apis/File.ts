@@ -19,3 +19,33 @@ export async function getFileBody(
     data: { path },
   });
 }
+
+export async function saveFileBody(
+  baseURL: string,
+  token: string,
+  path: string,
+  data: string
+) {
+  const instance = request(baseURL, token);
+  return await instance({
+    url: "/files?action=SaveFileBody",
+    data: {
+      path,
+      data,
+      encoding: "utf-8",
+    },
+  });
+}
+
+export async function createFile(
+  baseURL: string,
+  token: string,
+  path: string
+) {
+  const instance = request(baseURL, token);
+  return await instance({
+    url: "/files?action=CreateFile",
+    data: { path },
+  });
+}
+
