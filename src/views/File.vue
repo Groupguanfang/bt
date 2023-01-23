@@ -16,6 +16,7 @@ import { watch, computed, onMounted, ref, type Ref } from "vue";
 import { getDir, createDir, deleteDir, deleteFile, createFile } from "@/apis";
 import { useFile } from "@/stores/File";
 import { useMain } from "@/stores/Main";
+import Javascript from "@/assets/icon/Javascript.vue";
 
 import {
   Folder,
@@ -80,6 +81,15 @@ watch(watchPath, async () => {
 });
 
 /**
+ * 判断文件扩展名
+ */
+const nameParser = (name: string): string => {
+  const filename = name;
+  const format = filename.split(".");
+  return format[format.length - 1];
+};
+
+/**
  * 更多操作
  */
 let nowOperation: {
@@ -130,11 +140,22 @@ const columns: DataTableColumns = [
           >
             {{
               default: () => row.name,
-              icon: () => (
-                <NIcon>
-                  <Document />
-                </NIcon>
-              ),
+              icon: () => {
+                const format = nameParser(row.name);
+                if (format === "js" || format === "cjs" || format === "mjs") {
+                  return (
+                    <NIcon>
+                      <Javascript />
+                    </NIcon>
+                  );
+                } else {
+                  return (
+                    <NIcon>
+                      <Document />
+                    </NIcon>
+                  );
+                }
+              },
             }}
           </NButton>
         );
