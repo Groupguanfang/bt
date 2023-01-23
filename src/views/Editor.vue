@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { onMounted, ref, type Ref } from "vue";
+import { computed, onBeforeMount, onMounted, ref, watch, type Ref } from "vue";
 import { useRoute } from "vue-router";
 import CodeMirror from "vue-codemirror6";
 import { autocompletion } from "@codemirror/autocomplete";
 import { oneDark } from "@codemirror/theme-one-dark";
-
 import { markdown as md } from "@codemirror/lang-markdown";
 import { javascript } from "@codemirror/lang-javascript";
 import { html } from "@codemirror/lang-html";
@@ -15,11 +14,15 @@ import { cpp } from "@codemirror/lang-cpp";
 import { rust } from "@codemirror/lang-rust";
 import { json, jsonParseLinter } from "@codemirror/lang-json";
 
-import { getFileBody } from "@/apis";
+import { getFileBody, saveFileBody } from "@/apis";
 import { useMain } from "@/stores/Main";
+import { useFile } from "@/stores/File";
+import { useMessage } from "naive-ui";
 
 const route = useRoute();
 const main = useMain();
+const file = useFile();
+const message = useMessage();
 
 const path = route.query.path;
 const name = route.query.name;
@@ -86,7 +89,7 @@ console.log(lang);
 /**
  * 获取文件内容
  */
-onMounted(async () => {
+onBeforeMount(async () => {
   const data = await getFileBody(
     main.now?.ip as string,
     main.now?.token as string,
@@ -96,6 +99,23 @@ onMounted(async () => {
     text.value = data.data.data;
   }
 });
+
+/**
+ * 保存
+ */
+
+watch(
+  computed(() => file.handler),
+  async () => {
+    const upstream = await saveFileBody(
+      main.now?.ip as string,
+      main.now?.token as string,
+      path as string,
+      text.value
+    );
+    message.success(upstream.data.msg);
+  }
+);
 </script>
 
 <template>

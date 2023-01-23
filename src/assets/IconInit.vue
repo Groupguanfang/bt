@@ -20,6 +20,9 @@ import Font from "@/assets/icon/Font.vue";
 import File from "@/assets/icon/File.vue";
 import Python from "@/assets/icon/Python.vue";
 import Prettier from "@/assets/icon/Prettier.vue";
+import Editorconfig from "./icon/Editorconfig.vue";
+import Eslint from "./icon/Eslint.vue";
+
 import { computed, ref, watch } from "vue";
 const row = defineProps({
   name: {
@@ -56,7 +59,18 @@ watch(
         name === '.prettierrc.json' ||
         name === '.prettier.config.js' ||
         name === '.prettierrc.yaml' ||
-        name === '.prettierrc.toml'
+        name === '.prettierrc.toml' ||
+        name === '.prettierignore'
+      "
+    />
+    <Editorconfig v-else-if="name === '.editorconfig'" />
+    <Eslint
+      v-else-if="
+        name === '.eslintignore' ||
+        name === '.eslintrc' ||
+        name === '.eslintrc.js' ||
+        name === '.eslintrc.json' ||
+        name === '.eslintrc.cjs'
       "
     />
     <Javascript

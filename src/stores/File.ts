@@ -3,6 +3,8 @@ import { defineStore } from "pinia";
 interface state {
   path: string;
   history: Array<string>;
+  handler: boolean;
+  isChange: boolean;
 }
 
 export const useFile = defineStore("file", {
@@ -10,6 +12,8 @@ export const useFile = defineStore("file", {
     return {
       path: "/",
       history: [],
+      handler: false,
+      isChange: false,
     };
   },
   actions: {
@@ -36,6 +40,7 @@ export const useFile = defineStore("file", {
     strategies: [
       {
         storage: localStorage,
+        paths: ["path", "history"],
       },
     ],
   },

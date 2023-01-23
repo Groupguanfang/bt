@@ -12,10 +12,6 @@ import {
   NInput,
   NModal,
 } from "naive-ui";
-import { watch, computed, onMounted, ref, type Ref } from "vue";
-import { getDir, createDir, deleteDir, deleteFile, createFile } from "@/apis";
-import { useFile } from "@/stores/File";
-import { useMain } from "@/stores/Main";
 import {
   Folder,
   Settings,
@@ -24,6 +20,10 @@ import {
   DocumentAdd,
   Delete,
 } from "@vicons/carbon";
+import { watch, computed, onMounted, ref, type Ref } from "vue";
+import { getDir, createDir, deleteDir, deleteFile, createFile } from "@/apis";
+import { useFile } from "@/stores/File";
+import { useMain } from "@/stores/Main";
 import { useRouter } from "vue-router";
 import IconInit from "@/assets/IconInit.vue";
 

@@ -6,7 +6,7 @@ defineProps({
   time: String,
   path: String,
   id: {
-    type: String,
+    type: Number,
     required: true,
   },
 });
