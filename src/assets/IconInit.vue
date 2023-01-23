@@ -20,36 +20,43 @@ import Font from "@/assets/icon/Font.vue";
 import File from "@/assets/icon/File.vue";
 import Python from "@/assets/icon/Python.vue";
 import Prettier from "@/assets/icon/Prettier.vue";
+import { computed, ref, watch } from "vue";
 const row = defineProps({
   name: {
     type: String,
     required: true,
   },
 });
+const name = ref(row.name);
 const nameParser = (filename: string): string => {
   const format = filename.split(".");
   return format[format.length - 1];
 };
-const format = nameParser(row.name);
+let format = nameParser(row.name);
+watch(
+  computed(() => row.name),
+  () => {
+    name.value = row.name;
+    format = nameParser(row.name);
+  }
+);
 </script>
 
 <template>
   <NIcon>
-    <Npm
-      v-if="row.name === 'package.json' || row.name === 'package-lock.json'"
-    />
-    <Yarn v-else-if="row.name === 'yarn.lock'" />
-    <Pnpm v-else-if="row.name === 'pnpm-lock.yaml'" />
-    <Git v-else-if="row.name === '.gitignore'" />
+    <Npm v-if="name === 'package.json' || name === 'package-lock.json'" />
+    <Yarn v-else-if="name === 'yarn.lock'" />
+    <Pnpm v-else-if="name === 'pnpm-lock.yaml'" />
+    <Git v-else-if="name === '.gitignore'" />
     <Prettier
       v-else-if="
-        row.name === '.prettierrc' ||
-        row.name === '.prettierrc.js' ||
-        row.name === '.prettierrc.mjs' ||
-        row.name === '.prettierrc.json' ||
-        row.name === '.prettier.config.js' ||
-        row.name === '.prettierrc.yaml' ||
-        row.name === '.prettierrc.toml'
+        name === '.prettierrc' ||
+        name === '.prettierrc.js' ||
+        name === '.prettierrc.mjs' ||
+        name === '.prettierrc.json' ||
+        name === '.prettier.config.js' ||
+        name === '.prettierrc.yaml' ||
+        name === '.prettierrc.toml'
       "
     />
     <Javascript
