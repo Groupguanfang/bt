@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineProps } from "vue";
 import { SettingsAdjust } from "@vicons/carbon";
 import { NCard, NSpace, NText, NButton } from "naive-ui";
 defineProps({

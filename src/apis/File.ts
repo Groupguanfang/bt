@@ -16,7 +16,7 @@ export async function getFileBody(
   const instance = request(baseURL, token);
   return await instance({
     url: "/files?action=GetFileBody",
-    data: { path },
+    params: { path },
   });
 }
 

@@ -12,15 +12,7 @@ import {
   NInput,
   NModal,
 } from "naive-ui";
-import {
-  h,
-  watch,
-  computed,
-  onMounted,
-  ref,
-  type Ref,
-  type Component,
-} from "vue";
+import { watch, computed, onMounted, ref, type Ref } from "vue";
 import { getDir, createDir, deleteDir, deleteFile, createFile } from "@/apis";
 import { useFile } from "@/stores/File";
 import { useMain } from "@/stores/Main";
@@ -34,11 +26,13 @@ import {
   DocumentAdd,
   Delete,
 } from "@vicons/carbon";
+import { useRouter } from "vue-router";
 
 const file = useFile();
 const main = useMain();
 const message = useMessage();
 const dialog = useDialog();
+const router = useRouter();
 
 const tableLoading = ref(true);
 const datas: Ref<Array<any>> = ref([]);
@@ -88,7 +82,11 @@ watch(watchPath, async () => {
 /**
  * 更多操作
  */
-let nowOperation: { name?: string; path?: string } = {};
+let nowOperation: {
+  name?: string;
+  type?: "folder" | "file";
+  path?: string;
+} = {};
 const isShowOperation = ref(false);
 
 /**
@@ -99,7 +97,7 @@ const columns: DataTableColumns = [
     title: "名称",
     key: "name",
     render(row) {
-      if (row.type === "文件夹") {
+      if (row.type === "folder") {
         return (
           <NButton
             text
@@ -118,7 +116,18 @@ const columns: DataTableColumns = [
         );
       } else {
         return (
-          <NButton text>
+          <NButton
+            onClick={() =>
+              router.push({
+                path: "/dashboard/editor",
+                query: {
+                  path: file.path + "/" + row.name,
+                  name: row.name as string,
+                },
+              })
+            }
+            text
+          >
             {{
               default: () => row.name,
               icon: () => (
@@ -330,7 +339,9 @@ const newFile = () => {
       :data="datas"
     />
     <NModal v-model:show="isShowOperation" preset="card" title="更多操作">
-      <NButton @click="deleter(nowOperation.type, nowOperation.name)">
+      <NButton
+        @click="deleter(nowOperation.type as 'folder' | 'file', nowOperation.name as string)"
+      >
         删除
         <template #icon>
           <NIcon><Delete /></NIcon>
