@@ -6,11 +6,14 @@ import { autocompletion } from "@codemirror/autocomplete";
 import { oneDark } from "@codemirror/theme-one-dark";
 
 import { markdown as md } from "@codemirror/lang-markdown";
-import { vue } from "@codemirror/lang-vue";
 import { javascript } from "@codemirror/lang-javascript";
 import { html } from "@codemirror/lang-html";
 import { css } from "@codemirror/lang-css";
+import { php } from "@codemirror/lang-php";
 import { python } from "@codemirror/lang-python";
+import { cpp } from "@codemirror/lang-cpp";
+import { rust } from "@codemirror/lang-rust";
+import { json, jsonParseLinter } from "@codemirror/lang-json";
 
 import { getFileBody } from "@/apis";
 import { useMain } from "@/stores/Main";
@@ -25,7 +28,7 @@ const dark: Ref<boolean> = ref(
   matchMedia("(prefers-color-scheme: dark)").matches
 );
 let lang: any;
-
+let lint: any;
 /**
  * 判断文件扩展名
  */
@@ -66,8 +69,17 @@ if (format === "js" || format === "cjs" || format === "mjs") {
   format === "sass"
 ) {
   lang = css();
-} else if (format === "python") {
+} else if (format === "py") {
   lang = python();
+} else if (format === "php") {
+  lang = php();
+} else if (format === "cpp") {
+  lang = cpp();
+} else if (format === "rust") {
+  lang = rust();
+} else if (format === "json") {
+  lang = json();
+  lint = jsonParseLinter();
 }
 console.log(lang);
 
@@ -96,6 +108,7 @@ onMounted(async () => {
     :tab-size="2"
     :wrap="true"
     :basic="true"
+    :linter="lint"
   />
 </template>
 
