@@ -18,7 +18,6 @@ import { useFile } from "@/stores/File";
 import { useMain } from "@/stores/Main";
 import {
   Folder,
-  Document,
   Settings,
   ChevronLeft,
   FolderAdd,
@@ -26,7 +25,7 @@ import {
   Delete,
 } from "@vicons/carbon";
 import { useRouter } from "vue-router";
-import IconInit from "@/assets/IconInit";
+import IconInit from "@/assets/IconInit.vue";
 
 const file = useFile();
 const main = useMain();
@@ -298,6 +297,7 @@ const newFile = () => {
         resolve(newer);
       });
     },
+    icon: () => <IconInit name={newFileName.value} />,
     content: () => (
       <NInput
         size="large"
