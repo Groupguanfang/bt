@@ -8,6 +8,10 @@ import { oneDark } from "@codemirror/theme-one-dark";
 import { markdown as md } from "@codemirror/lang-markdown";
 import { vue } from "@codemirror/lang-vue";
 import { javascript } from "@codemirror/lang-javascript";
+import { html } from "@codemirror/lang-html";
+import { css } from "@codemirror/lang-css";
+import { python } from "@codemirror/lang-python";
+
 import { getFileBody } from "@/apis";
 import { useMain } from "@/stores/Main";
 
@@ -44,9 +48,26 @@ if (format === "js" || format === "cjs" || format === "mjs") {
   });
   console.log("ts");
 } else if (format === "vue") {
-  lang = vue();
+  lang = html({
+    matchClosingTags: true,
+    autoCloseTags: true,
+  });
 } else if (format === "md") {
   lang = md();
+} else if (format === "html") {
+  lang = html({
+    matchClosingTags: true,
+    autoCloseTags: true,
+  });
+} else if (
+  format === "css" ||
+  format === "less" ||
+  format === "scss" ||
+  format === "sass"
+) {
+  lang = css();
+} else if (format === "python") {
+  lang = python();
 }
 console.log(lang);
 
@@ -74,5 +95,8 @@ onMounted(async () => {
     :gutter="true"
     :tab-size="2"
     :wrap="true"
+    :basic="true"
   />
 </template>
+
+<style></style>
