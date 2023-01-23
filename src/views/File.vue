@@ -16,8 +16,6 @@ import { watch, computed, onMounted, ref, type Ref } from "vue";
 import { getDir, createDir, deleteDir, deleteFile, createFile } from "@/apis";
 import { useFile } from "@/stores/File";
 import { useMain } from "@/stores/Main";
-import Javascript from "@/assets/icon/Javascript.vue";
-
 import {
   Folder,
   Document,
@@ -28,6 +26,7 @@ import {
   Delete,
 } from "@vicons/carbon";
 import { useRouter } from "vue-router";
+import IconInit from "@/assets/IconInit";
 
 const file = useFile();
 const main = useMain();
@@ -140,22 +139,7 @@ const columns: DataTableColumns = [
           >
             {{
               default: () => row.name,
-              icon: () => {
-                const format = nameParser(row.name);
-                if (format === "js" || format === "cjs" || format === "mjs") {
-                  return (
-                    <NIcon>
-                      <Javascript />
-                    </NIcon>
-                  );
-                } else {
-                  return (
-                    <NIcon>
-                      <Document />
-                    </NIcon>
-                  );
-                }
-              },
+              icon: () => <IconInit name={row.name as string}></IconInit>,
             }}
           </NButton>
         );
