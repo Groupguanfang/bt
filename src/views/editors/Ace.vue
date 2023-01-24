@@ -187,10 +187,14 @@ if (format === "ts") {
 </template>
 
 <style>
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url("/fonts/JetBrainsMono-Regular.woff") format('woff'),
+  url("/fonts/JetBrainsMono-Regular.woff2") format('woff2'),
+  url("/fonts/JetBrainsMono-Regular-2.ttf") format('ttf'),
+}
 .main {
-  font-family: "JetBrains Mono", v-sans, system-ui, -apple-system,
-    BlinkMacSystemFont, "Segoe UI", sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: "JetBrains Mono",v-sans, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   width: 100%;
   height: 100%;
   z-index: 0;
