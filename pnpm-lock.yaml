@@ -42,6 +42,7 @@ specifiers:
   vue-codemirror6: ^1.1.6
   vue-router: ^4.1.6
   vue-tsc: ^1.0.12
+  vue3-ace-editor: ^2.2.2
 
 dependencies:
   '@codemirror/autocomplete': 6.4.0
@@ -69,6 +70,7 @@ dependencies:
   vue: 3.2.45
   vue-codemirror6: 1.1.6_vue@3.2.45
   vue-router: 4.1.6_vue@3.2.45
+  vue3-ace-editor: 2.2.2
 
 devDependencies:
   '@rushstack/eslint-patch': 1.2.0
@@ -3140,6 +3142,10 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /resize-observer-polyfill/1.5.1:
+    resolution: {integrity: sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==}
+    dev: false
+
   /resolve-from/4.0.0:
     resolution: {integrity: sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==}
     engines: {node: '>=4'}
@@ -3724,6 +3730,14 @@ packages:
       '@vue/runtime-dom': 3.2.45
       '@vue/server-renderer': 3.2.45_vue@3.2.45
       '@vue/shared': 3.2.45
+
+  /vue3-ace-editor/2.2.2:
+    resolution: {integrity: sha512-fZ6OWosbU+odLrtrcGC/536QjCigujYJB0Hf6/tBp+ef/ohTadwQAqyBlVzOmvrmzZyubphpV9zkaZcx5Fuivw==}
+    dependencies:
+      ace-builds: 1.14.0
+      resize-observer-polyfill: 1.5.1
+      vue: 3.2.45
+    dev: false
 
   /vueuc/0.4.51_vue@3.2.45:
     resolution: {integrity: sha512-pLiMChM4f+W8czlIClGvGBYo656lc2Y0/mXFSCydcSmnCR1izlKPGMgiYBGjbY9FDkFG8a2HEVz7t0DNzBWbDw==}

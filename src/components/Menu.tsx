@@ -6,6 +6,7 @@ import {
   VolumeFileStorage,
   Store,
   Task,
+  Settings,
 } from "@vicons/carbon";
 import { NIcon } from "naive-ui";
 import { h, type Component } from "vue";
@@ -57,5 +58,12 @@ export const MenuOptions: MenuOption[] = [
     label: () => <RouterLink to="/dashboard/task">{language.task}</RouterLink>,
     key: "task",
     icon: renderIcon(Task),
+  },
+  {
+    label: () => (
+      <RouterLink to="/dashboard/setting">{language.setting}</RouterLink>
+    ),
+    key: "setting",
+    icon: renderIcon(Settings),
   },
 ];

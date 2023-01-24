@@ -5,4 +5,5 @@ export default {
   file: "File",
   store: "Store",
   task: "Task",
+  setting: "Setting",
 };

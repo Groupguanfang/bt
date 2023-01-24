@@ -5,4 +5,5 @@ export default {
   file: "文件",
   store: "商店",
   task: "任务",
+  setting: "设置",
 };

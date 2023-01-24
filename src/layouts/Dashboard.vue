@@ -7,16 +7,21 @@ import {
   NMenu,
 } from "naive-ui";
 import { ref, computed, watch } from "vue";
-import { useRoute } from "vue-router"
+import { useRoute } from "vue-router";
 import { MenuOptions } from "@/components/Menu";
 import Header from "@/components/Header.vue";
-import { useMain } from "@/stores/Main"
-const main = useMain()
-const route = useRoute()
+import { useMain } from "@/stores/Main";
+const main = useMain();
+const route = useRoute();
 const collapsed = ref(main.isCollapsed);
-const sider = computed(() => main.showSider)
-watch(collapsed, () => main.isCollapsed = collapsed.value)
-const style = `padding: ${route.path === "/dashboard/editor" ? "" : "24px"};overflow-x:hidden;overflow-y: auto`
+const sider = computed(() => main.showSider);
+watch(collapsed, () => (main.isCollapsed = collapsed.value));
+const style = computed(
+  () =>
+    `padding: ${
+      route.path === "/dashboard/editor" ? "" : "24px"
+    };overflow-x:hidden;overflow-y: auto`
+);
 </script>
 
 <template>
@@ -43,9 +48,7 @@ const style = `padding: ${route.path === "/dashboard/editor" ? "" : "24px"};over
           accordion
         />
       </NLayoutSider>
-      <NLayoutContent
-        :content-style="style"
-      >
+      <NLayoutContent :content-style="style">
         <RouterView />
       </NLayoutContent>
     </NLayout>
