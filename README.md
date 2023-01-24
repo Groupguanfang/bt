@@ -16,7 +16,9 @@
 
 <div align="center">
 
+![文件编辑](https://github.com/Groupguanfang/bt/blob/master/screenshots/pc-editing.png?raw=true)
 ![面板](https://github.com/Groupguanfang/bt/blob/master/screenshots/mobile-dash.png?raw=true)
+![手机文件管理](https://github.com/Groupguanfang/bt/blob/master/screenshots/pc-file.png?raw=true)
 ![文件管理](https://github.com/Groupguanfang/bt/blob/master/screenshots/mobile-file.png?raw=true)
 
 </div>
