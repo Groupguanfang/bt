@@ -29,7 +29,7 @@ export async function saveFileBody(
   const instance = request(baseURL, token);
   return await instance({
     url: "/files?action=SaveFileBody",
-    params: {
+    data: {
       path,
       encoding: "utf-8",
       data,
