@@ -7,6 +7,7 @@ import {
   Store,
   Task,
   Settings,
+  Terminal,
 } from "@vicons/carbon";
 import { NIcon } from "naive-ui";
 import { h, type Component } from "vue";
@@ -58,6 +59,11 @@ export const MenuOptions: MenuOption[] = [
     label: () => <RouterLink to="/dashboard/task">{language.task}</RouterLink>,
     key: "task",
     icon: renderIcon(Task),
+  },
+  {
+    label: () => <RouterLink to="/dashboard/xterm">终端</RouterLink>,
+    key: "xterm",
+    icon: renderIcon(Terminal),
   },
   {
     label: () => (

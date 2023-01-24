@@ -54,6 +54,11 @@ const router = createRouter({
           component: () => import("./views/Task.vue"),
         },
         {
+          path: "/dashboard/xterm",
+          name: "xterm",
+          component: () => import("./views/Xterm.vue"),
+        },
+        {
           path: "/dashboard/setting",
           name: "setting",
           component: () => import("./views/Setting.vue"),
