@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, onMounted, ref, watch, type Ref } from "vue";
+import { computed, onBeforeMount, ref, watch, type Ref } from "vue";
 import { useRoute } from "vue-router";
 import CodeMirror from "vue-codemirror6";
 import { autocompletion } from "@codemirror/autocomplete";
@@ -125,7 +125,7 @@ watch(
     v-model="text"
     :gutter="true"
     :tab-size="2"
-    :wrap="true"
+    :wrap="file.wrap"
     :basic="true"
     :linter="lint"
   />

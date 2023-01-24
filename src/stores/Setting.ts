@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
 interface state {
-  editor: "Ace" | "Codemirror 6";
+  editor: "Ace" | "Codemirror 6" | "Monaco";
 }
 
 export const useSetting = defineStore("setting", {

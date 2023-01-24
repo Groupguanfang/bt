@@ -5,6 +5,8 @@ interface state {
   history: Array<string>;
   handler: boolean;
   isChange: boolean;
+  size: number;
+  wrap: boolean;
 }
 
 export const useFile = defineStore("file", {
@@ -14,6 +16,8 @@ export const useFile = defineStore("file", {
       history: [],
       handler: false,
       isChange: false,
+      size: 12,
+      wrap: true,
     };
   },
   actions: {
@@ -40,7 +44,7 @@ export const useFile = defineStore("file", {
     strategies: [
       {
         storage: localStorage,
-        paths: ["path", "history"],
+        paths: ["path", "history", "size", "wrap"],
       },
     ],
   },

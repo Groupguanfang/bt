@@ -109,7 +109,7 @@ const columns: DataTableColumns = [
         return (
           <NButton
             text
-            size="small"
+            size="large"
             onClick={() => file.push(row.name as string)}
           >
             {{
@@ -135,6 +135,7 @@ const columns: DataTableColumns = [
               })
             }
             text
+            size="large"
           >
             {{
               default: () => row.name,
