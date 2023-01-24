@@ -23,6 +23,7 @@ import sql from "ace-builds/src-noconflict/mode-sql?url";
 import jsx from "ace-builds/src-noconflict/mode-jsx?url";
 import tsx from "ace-builds/src-noconflict/mode-tsx?url";
 import toml from "ace-builds/src-noconflict/mode-toml?url";
+import markdown from "ace-builds/src-noconflict/mode-markdown?url";
 
 import javascriptWorker from "ace-builds/src-noconflict/worker-javascript?url";
 import htmlWorker from "ace-builds/src-noconflict/worker-html?url";
@@ -42,6 +43,7 @@ import sqlSnippets from "ace-builds/src-noconflict/snippets/sql?url";
 import jsxSnippets from "ace-builds/src-noconflict/snippets/jsx?url";
 import tsxSnippets from "ace-builds/src-noconflict/snippets/tsx?url";
 import tomlSnippets from "ace-builds/src-noconflict/snippets/toml?url";
+import markdownSnippets from "ace-builds/src-noconflict/snippets/markdown?url";
 
 const main = useMain();
 const file = useFile();
@@ -171,6 +173,10 @@ if (format === "ts") {
   ace.config.setModuleUrl("ace/mode/toml", toml);
   ace.config.setModuleUrl("ace/snippets/toml", tomlSnippets);
   lang.value = "toml";
+} else if (format === "md") {
+  ace.config.setModuleUrl("ace/mode/markdown", markdown);
+  ace.config.setModuleUrl("ace/snippets/markdown", markdownSnippets);
+  lang.value = "markdown";
 }
 </script>
 
