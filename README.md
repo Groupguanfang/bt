@@ -1,45 +1,38 @@
-# baota
+# BaoTa
 
-This template should help get you started developing with Vue 3 in Vite.
+这是一个基于宝塔面板API的宝塔面板前端重构。
+按道理来说，除了插件安装功能，其他都能做。慢等，不急☕️
 
-## Recommended IDE Setup
+目前仍然处于开发阶段，快速迭代中。
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## 特性 ✨
+* 🌍 i8n支持English/中文
+* 📱 对移动端友好 响应式布局
+* 📃 文件管理功能（复制粘贴正在开发中
+* ✍️ Ace Editor，Codemirror 6和微软的Monaco编辑器全上了，编辑器大合集，给我们这群学生党在手机上摸鱼写代码极大的方便。
+* 👀 其他功能正在火速上新中...
 
-## Type Support for `.vue` Imports in TS
+做这个，最主要的原因是因为宝塔面板的手机端实在是太垃了，所以我重心放在了手机端。上几张图吧...
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
-
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
+## 安装
 
 ```sh
 pnpm install
 ```
 
-### Compile and Hot-Reload for Development
+### 开发模式
 
 ```sh
 pnpm dev
 ```
 
-### Type-Check, Compile and Minify for Production
+### 类型检查
 
 ```sh
 pnpm build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+### ESLint
 
 ```sh
 pnpm lint
