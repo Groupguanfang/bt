@@ -14,8 +14,12 @@
 
 做这个，最主要的原因是因为宝塔面板的手机端实在是太垃了，所以我重心放在了手机端。上几张图吧...
 
+<div align="center">
+
 ![面板](https://github.com/Groupguanfang/bt/blob/master/screenshots/mobile-dash.png?raw=true)
 ![文件管理](https://github.com/Groupguanfang/bt/blob/master/screenshots/mobile-file.png?raw=true)
+
+</div>
 
 ## 安装
 
