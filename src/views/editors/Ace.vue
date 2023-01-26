@@ -24,6 +24,7 @@ import jsx from "ace-builds/src-noconflict/mode-jsx?url";
 import tsx from "ace-builds/src-noconflict/mode-tsx?url";
 import toml from "ace-builds/src-noconflict/mode-toml?url";
 import markdown from "ace-builds/src-noconflict/mode-markdown?url";
+import python from "ace-builds/src-noconflict/mode-python?url";
 
 import javascriptWorker from "ace-builds/src-noconflict/worker-javascript?url";
 import htmlWorker from "ace-builds/src-noconflict/worker-html?url";
@@ -44,6 +45,7 @@ import jsxSnippets from "ace-builds/src-noconflict/snippets/jsx?url";
 import tsxSnippets from "ace-builds/src-noconflict/snippets/tsx?url";
 import tomlSnippets from "ace-builds/src-noconflict/snippets/toml?url";
 import markdownSnippets from "ace-builds/src-noconflict/snippets/markdown?url";
+import pythonSnippets from "ace-builds/src-noconflict/snippets/python?url";
 
 const main = useMain();
 const file = useFile();
@@ -151,7 +153,7 @@ if (format === "ts") {
   ace.config.setModuleUrl("ace/mode/css_worker", cssWorker);
   ace.config.setModuleUrl("ace/snippets/css", cssSnippets);
   lang.value = "less";
-} else if (format === "yaml") {
+} else if (format === "yaml"|| format === "yml") {
   ace.config.setModuleUrl("ace/mode/yaml", yaml);
   ace.config.setModuleUrl("ace/mode/yaml_worker", yamlWorker);
   ace.config.setModuleUrl("ace/snippets/yaml", yamlSnippets);
@@ -177,6 +179,10 @@ if (format === "ts") {
   ace.config.setModuleUrl("ace/mode/markdown", markdown);
   ace.config.setModuleUrl("ace/snippets/markdown", markdownSnippets);
   lang.value = "markdown";
+} else if (format === "py") {
+    ace.config.setModuleUrl("ace/mode/python", markdown);
+  ace.config.setModuleUrl("ace/snippets/python", markdownSnippets);
+  lang.value = "python";
 }
 </script>
 
