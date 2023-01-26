@@ -32,6 +32,7 @@ import TestTs from "./icon/TestTs.vue";
 import DeclareTs from "./icon/DeclareTs.vue";
 import Yaml from "./icon/Yaml.vue";
 import Xml from "./icon/Xml.vue";
+import Jest from "./icon/Json.vue";
 
 import { computed, ref, watch } from "vue";
 
@@ -59,6 +60,7 @@ watch(
 <template>
   <NIcon>
     <Npm v-if="name === 'package.json' || name === 'package-lock.json'" />
+    <Jest v-else-if="/jest-e2e.json/.test(name)" />
     <Yarn v-else-if="name === 'yarn.lock'" />
     <Pnpm v-else-if="name === 'pnpm-lock.yaml'" />
     <Git v-else-if="name === '.gitignore'" />
