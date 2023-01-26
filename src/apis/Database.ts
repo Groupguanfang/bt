@@ -11,3 +11,13 @@ export async function GetCloudServer(
     data: { type },
   });
 }
+
+export async function GetDatabase(baseURL: string, token: string) {
+  const instance = request(baseURL, token);
+  return await instance({
+    url: "/data?action=getData",
+    params: {
+      table: "databases",
+    },
+  });
+}

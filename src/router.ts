@@ -1,4 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { createDiscreteApi } from "naive-ui";
+
+const { loadingBar } = createDiscreteApi(["loadingBar"]);
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -71,6 +74,15 @@ const router = createRouter({
       component: () => import("./layouts/Servers.vue"),
     },
   ],
+});
+
+router.beforeEach((_to, _from, next) => {
+  loadingBar.start();
+  next();
+});
+
+router.afterEach(() => {
+  loadingBar.finish();
 });
 
 export default router;

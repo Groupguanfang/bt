@@ -11,3 +11,15 @@ export async function getSoftList(
     params: { type },
   });
 }
+
+export async function getSoftFind(
+  baseURL: string,
+  token: string,
+  name: string
+) {
+  const instance = request(baseURL, token);
+  return await instance({
+    url: "/plugin?action=get_soft_find",
+    params: { sName: name },
+  });
+}

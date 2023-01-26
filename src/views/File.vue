@@ -26,6 +26,7 @@ import { useFile } from "@/stores/File";
 import { useMain } from "@/stores/Main";
 import { useRouter } from "vue-router";
 import IconInit from "@/assets/IconInit.vue";
+import Folderinit from "@/assets/Folderinit.vue";
 
 const file = useFile();
 const main = useMain();
@@ -114,11 +115,7 @@ const columns: DataTableColumns = [
           >
             {{
               default: () => row.name,
-              icon: () => (
-                <NIcon>
-                  <Folder />
-                </NIcon>
-              ),
+              icon: () => <Folderinit name={row.name as string} />,
             }}
           </NButton>
         );
@@ -192,6 +189,7 @@ const newFolder = () => {
     title: "新建文件夹",
     positiveText: "好",
     negativeText: "取消",
+    icon: () => <Folderinit name={newFolderName.value} />,
     onPositiveClick: () => {
       return new Promise(async (resolve) => {
         newFolderDialog.loading = true;
