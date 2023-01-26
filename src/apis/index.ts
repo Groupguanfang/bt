@@ -32,3 +32,5 @@ export * from "./Site";
 export * from "./File";
 export * from "./Database";
 export * from "./Plugin";
+export * from "./Database";
+export * from "./Task";
