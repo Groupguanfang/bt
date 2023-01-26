@@ -29,6 +29,7 @@ import NestMiddleware from "./icon/NestMiddleware.vue";
 import NestService from "./icon/NestService.vue";
 import NestDecorator from "./icon/NestDecorator.vue";
 import TestTs from "./icon/TestTs.vue";
+import DeclareTs from "./icon/DeclareTs.vue";
 
 import { computed, ref, watch } from "vue";
 
@@ -59,6 +60,7 @@ watch(
     <Yarn v-else-if="name === 'yarn.lock'" />
     <Pnpm v-else-if="name === 'pnpm-lock.yaml'" />
     <Git v-else-if="name === '.gitignore'" />
+    <DeclareTs v-else-if="/.d.ts$/g.test(name)" />
     <!-- Nest家族 -->
     <NestController v-else-if="/.controller.ts$/g.test(name)" />
     <NestModule v-else-if="/.module.ts$/g.test(name)" />
