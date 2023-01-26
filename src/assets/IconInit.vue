@@ -30,6 +30,8 @@ import NestService from "./icon/NestService.vue";
 import NestDecorator from "./icon/NestDecorator.vue";
 import TestTs from "./icon/TestTs.vue";
 import DeclareTs from "./icon/DeclareTs.vue";
+import Yaml from "./icon/Yaml.vue";
+import Xml from "./icon/Xml.vue";
 
 import { computed, ref, watch } from "vue";
 
@@ -105,6 +107,8 @@ watch(
     <Php v-else-if="format === 'php'" />
     <Sql v-else-if="format === 'sql'" />
     <Css v-else-if="format === 'css'" />
+    <Yaml v-else-if="format === 'yaml' || format === 'yml'" />
+    <Xml v-else-if="format === 'xml'" />
     <Python v-else-if="format === 'py'" />
     <Font
       v-else-if="
