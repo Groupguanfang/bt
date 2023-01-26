@@ -22,8 +22,16 @@ import Python from "@/assets/icon/Python.vue";
 import Prettier from "@/assets/icon/Prettier.vue";
 import Editorconfig from "./icon/Editorconfig.vue";
 import Eslint from "./icon/Eslint.vue";
+import NestController from "./icon/NestController.vue";
+import NestModule from "./icon/NestModule.vue";
+import NestPipe from "./icon/NestPipe.vue";
+import NestMiddleware from "./icon/NestMiddleware.vue";
+import NestService from "./icon/NestService.vue";
+import NestDecorator from "./icon/NestDecorator.vue";
+import TestTs from "./icon/TestTs.vue";
 
 import { computed, ref, watch } from "vue";
+
 const row = defineProps({
   name: {
     type: String,
@@ -51,6 +59,15 @@ watch(
     <Yarn v-else-if="name === 'yarn.lock'" />
     <Pnpm v-else-if="name === 'pnpm-lock.yaml'" />
     <Git v-else-if="name === '.gitignore'" />
+    <!-- Nest家族 -->
+    <NestController v-else-if="/.controller.ts$/g.test(name)" />
+    <NestModule v-else-if="/.module.ts$/g.test(name)" />
+    <NestPipe v-else-if="/.pipe.ts$/g.test(name)" />
+    <NestMiddleware v-else-if="/.middleware.ts$/g.test(name)" />
+    <NestService v-else-if="/.service.ts$/g.test(name)" />
+    <NestDecorator v-else-if="/.decorator.ts$/g.test(name)" />
+    <!-- 测试 -->
+    <TestTs v-else-if="/.spec.ts$/g.test(name)" />
     <Prettier
       v-else-if="
         name === '.prettierrc' ||
