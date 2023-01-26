@@ -3,15 +3,23 @@ import i18n from "@/i18n";
 import { useMain } from "@/stores/Main";
 import { getSystemTotal, getDiskInfo, getNetWork } from "@/apis";
 import { onMounted, ref, type Ref } from "vue";
-import { NCard, NGrid, NGi, NH4, NProgress, NSpace } from "naive-ui";
+import { NCard, NGrid, NGi, NH4, NProgress, NSpace, NTable } from "naive-ui";
 import UpdateCard from "@/components/UpdateCard.vue";
+import InfoCard from "@/components/InfoCard.vue";
 
 const main = useMain();
 const cpuCores = ref();
 const cpuPercentage = ref(0);
 const memPercentage = ref(0);
 const diskPercentage: Ref<Array<any>> = ref([]);
-const netPercentage = ref();
+const netPercentage = ref({
+  cpu: ["", "", ""],
+  system: "",
+  title: "",
+  time: "",
+  user_info: { data: { username: "" } },
+  version: "",
+});
 const loadOnePercentage = ref(0);
 const loadFivePercentage = ref(0);
 const loadFifteenPercentage = ref(0);
@@ -116,6 +124,8 @@ onMounted(async () => {
         </NSpace>
       </NProgress>
     </NSpace>
+
+    <!-- 格子阵 -->
     <NSpace vertical>
       <NGrid
         x-gap="14"
@@ -143,6 +153,9 @@ onMounted(async () => {
         </NGi>
         <NGi>
           <UpdateCard />
+        </NGi>
+        <NGi>
+          <InfoCard :netPercentage="netPercentage" />
         </NGi>
       </NGrid>
     </NSpace>

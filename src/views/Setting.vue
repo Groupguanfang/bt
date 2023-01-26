@@ -3,7 +3,7 @@ import { useSetting } from "@/stores/Setting";
 import {
   NH1,
   NH4,
-  NRadioButton,
+  NRadio,
   NRadioGroup,
   NSpace,
   NTabPane,
@@ -38,10 +38,12 @@ const language = ref();
             :default-value="setting.editor"
             v-model:value="setting.editor"
             name="Editor Core"
+            size="large"
           >
-            <NRadioButton value="Ace" label="Ace Editor" />
-            <NRadioButton value="Codemirror 6" label="Codemirror 6" />
-            <NRadioButton value="Monaco" label="Monaco Editor" />
+            <NRadio value="Ace" label="Ace Editor" />
+            <NRadio value="Codemirror 6" label="Codemirror 6" />
+            <NRadio value="Monaco" label="Monaco Editor" />
+            <NRadio value="Codemirror 5" label="Codemirror 5" />
           </NRadioGroup>
           <NText depth="3">
             Ace Editor:
@@ -55,6 +57,9 @@ const language = ref();
           <NText depth="3">
             Monaco Editor:
             完全不支持移动端，微软出品，Vscode同款编辑器，性能那是杠杠的。如果您现在的设备是电脑，那么建议用这个。
+          </NText>
+          <NText depth="3">
+            Codemirror 5: 对移动端支持一般，没有代码提示，但是性能比v6版本好。
           </NText>
         </NSpace>
       </NTabPane>

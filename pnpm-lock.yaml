@@ -48,6 +48,7 @@ specifiers:
   xterm: ^5.1.0
   xterm-addon-attach: ^0.8.0
   xterm-addon-fit: ^0.7.0
+  zlden-codemirror5: ^5.62.3
 
 dependencies:
   '@codemirror/autocomplete': 6.4.0
@@ -81,6 +82,7 @@ dependencies:
   xterm: 5.1.0
   xterm-addon-attach: 0.8.0_xterm@5.1.0
   xterm-addon-fit: 0.7.0_xterm@5.1.0
+  zlden-codemirror5: 5.62.3
 
 devDependencies:
   '@rushstack/eslint-patch': 1.2.0
@@ -3884,3 +3886,7 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  /zlden-codemirror5/5.62.3:
+    resolution: {integrity: sha512-WXpkCf97uliDNVe4Sr2WJJPyLDQFeWO3ZaW4AgKX7J6lSeHa/wBc5XtylHmAlux7+NwW/hFTh0kwdwKZwm0PGQ==}
+    dev: false
