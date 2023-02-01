@@ -6,6 +6,7 @@ import { onMounted, ref, type Ref } from "vue";
 import { NCard, NGrid, NGi, NH4, NProgress, NSpace, NTable } from "naive-ui";
 import UpdateCard from "@/components/UpdateCard.vue";
 import InfoCard from "@/components/InfoCard.vue";
+import NetworkCard from "@/components/Site/NetworkCard.vue";
 
 const main = useMain();
 const cpuCores = ref();
@@ -19,10 +20,19 @@ const netPercentage = ref({
   time: "",
   user_info: { data: { username: "" } },
   version: "",
+  up: "",
+  down: "",
 });
 const loadOnePercentage = ref(0);
 const loadFivePercentage = ref(0);
 const loadFifteenPercentage = ref(0);
+const download = ref(0);
+const upload = ref(0);
+const read = ref(0);
+const write = ref(0);
+const readDelay = ref(0);
+const writeDelay = ref(0);
+
 const language = ref();
 /**
  * 切换语言
@@ -52,6 +62,12 @@ onMounted(async () => {
     loadOnePercentage.value = network.data.load.one;
     loadFivePercentage.value = network.data.load.five;
     loadFifteenPercentage.value = network.data.load.fifteen;
+    download.value = network.data.down;
+    upload.value = network.data.up;
+    read.value = network.data.iostat.ALL.read_bytes;
+    write.value = network.data.iostat.ALL.write_bytes;
+    readDelay.value = network.data.iostat.ALL.read_time;
+    writeDelay.value = network.data.iostat.ALL.write_time;
   }, 1000);
 
   // 磁盘信息
@@ -133,6 +149,16 @@ onMounted(async () => {
         cols="1 s:1 m:2 l:3 xl:4 2xl:5"
         responsive="screen"
       >
+        <NGi>
+          <NetworkCard
+            :write="write"
+            :read="read"
+            :download="download"
+            :upload="upload"
+            :readDelay="readDelay"
+            :writeDelay="writeDelay"
+          />
+        </NGi>
         <NGi>
           <NCard class="disk_container" :title="language.diskInfomation">
             <div
