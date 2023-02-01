@@ -7,6 +7,7 @@ import { NCard, NGrid, NGi, NH4, NProgress, NSpace, NTable } from "naive-ui";
 import UpdateCard from "@/components/UpdateCard.vue";
 import InfoCard from "@/components/InfoCard.vue";
 import NetworkCard from "@/components/Site/NetworkCard.vue";
+import TotalCard from "@/components/Site/TotalCard.vue";
 
 const main = useMain();
 const cpuCores = ref();
@@ -20,8 +21,9 @@ const netPercentage = ref({
   time: "",
   user_info: { data: { username: "" } },
   version: "",
-  up: "",
-  down: "",
+  ftp_total: 0,
+  site_total: 0,
+  database_total: 0,
 });
 const loadOnePercentage = ref(0);
 const loadFivePercentage = ref(0);
@@ -149,6 +151,13 @@ onMounted(async () => {
         cols="1 s:1 m:2 l:3 xl:4 2xl:5"
         responsive="screen"
       >
+        <NGi>
+          <TotalCard
+            :site="netPercentage.site_total"
+            :database="netPercentage.database_total"
+            :ftp="netPercentage.ftp_total"
+          />
+        </NGi>
         <NGi>
           <NetworkCard
             :write="write"
