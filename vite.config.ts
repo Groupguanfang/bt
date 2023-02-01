@@ -18,7 +18,7 @@ export default defineConfig({
     host: "0.0.0.0",
     proxy: {
       "/api": {
-        target: "请在这里填写您的宝塔面板地址",
+        target: "http://101.33.221.245:8888",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },

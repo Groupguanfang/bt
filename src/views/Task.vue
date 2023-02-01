@@ -39,10 +39,12 @@ watch(showLog, async (val) => {
     );
     console.log(log);
     content.value = log.data.msg;
+    loading.value = false
   }
 });
 
-const columns: DataTableColumns = [
+const loading = ref(false)
+const columns: DataTableColumns = ref([
   {
     title: "id",
     key: "id",
@@ -66,9 +68,11 @@ const columns: DataTableColumns = [
       return (
         <NButton
           onClick={() => {
+            loading.value = true
             nowId = row.id as number;
             showLog.value = true;
           }}
+          loading={loading.value}
         >
           操作
         </NButton>
@@ -76,7 +80,7 @@ const columns: DataTableColumns = [
     },
     fixed: "right",
   },
-];
+]);
 </script>
 
 <template>

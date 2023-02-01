@@ -6,7 +6,7 @@ import { autocompletion } from "@codemirror/autocomplete";
 import { oneDark } from "@codemirror/theme-one-dark";
 import { markdown as md } from "@codemirror/lang-markdown";
 import { javascript } from "@codemirror/lang-javascript";
-import { html } from "@codemirror/lang-html";
+import { html, htmlCompletionSource } from "@codemirror/lang-html";
 import { css } from "@codemirror/lang-css";
 import { php } from "@codemirror/lang-php";
 import { python } from "@codemirror/lang-python";
@@ -119,7 +119,7 @@ watch(
 
 <template>
   <CodeMirror
-    :extensions="[oneDark, autocompletion({ activateOnTyping: true })]"
+    :extensions="[oneDark, autocompletion()]"
     :lang="lang"
     :dark="dark"
     v-model="text"
