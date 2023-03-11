@@ -9,7 +9,7 @@ defineProps({
 </script>
 
 <template>
-  <NCard title="统计">
+  <NCard>
     <NGrid :x-gap="5" cols="3">
       <NGi>
         <NText :depth="3">FTP</NText>

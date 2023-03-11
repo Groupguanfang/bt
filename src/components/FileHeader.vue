@@ -59,7 +59,7 @@ const onWrapChanged = () => {
         </NInputNumber>
         <NDivider />
         <NH6 class="nopad">换行</NH6>
-        <NSwitch @change="onWrapChanged" v-model:value="file.wrap" />
+        <NSwitch @change:value="onWrapChanged" v-model:value="file.wrap" />
       </NSpace>
     </NModal>
   </NButtonGroup>
