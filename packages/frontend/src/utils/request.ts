@@ -7,10 +7,10 @@ export abstract class Baota {
   constructor(protected readonly baseURL: string, protected readonly key: string) {
     const timestamp = new Date().getTime()
     this.request = axios.create({
-      baseURL: 'http://localhost:3400/proxy',
+      baseURL: 'http://192.168.0.174:3400/proxy',
       withCredentials: false,
       headers: {
-        'Content-Type': 'x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded'
       },
       params: {
         request_time: timestamp,

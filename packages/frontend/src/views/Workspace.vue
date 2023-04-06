@@ -1,0 +1,121 @@
+<!-- eslint-disable vue/multi-word-component-names -->
+<script setup lang="tsx">
+import { NButton, NDataTable, NH1, NIcon, NText, type DataTableColumns } from 'naive-ui'
+import { WorkspaceAPI } from '@/apis/Workspace'
+import { useServer } from '@/stores/servers'
+import { useWorkspace } from '@/stores/workspace'
+import { OverflowMenuHorizontal } from '@vicons/carbon'
+import Folder from '@/assets/workspace/Folder.vue'
+import File from '@/assets/workspace/File.vue'
+import { computed, onMounted, ref, watch } from 'vue'
+
+const server = useServer()
+const workspaceStore = useWorkspace()
+const now = server.now - 1
+const workspace = new WorkspaceAPI(server.servers[now].url, server.servers[now].key)
+
+const DATA = ref<any[]>([])
+const DATALoading = ref(false)
+
+const onLoad = async (path: string = workspaceStore.path) => {
+  DATALoading.value = true
+  const data = await workspace.getDir(path)
+  console.log(data)
+  DATA.value = []
+  data.DIR.map((item: string) => {
+    const i = item.split(';')
+    DATA.value.push({
+      title: i[0],
+      type: '文件夹'
+    })
+  })
+  data.FILES.map((item: string) => {
+    const i = item.split(';')
+    DATA.value.push({
+      title: i[0],
+      type: '文件'
+    })
+  })
+  DATALoading.value = false
+}
+onMounted(onLoad)
+
+const watchPath = computed(() => workspaceStore.path)
+watch(watchPath, () => {
+  onLoad(workspaceStore.path)
+})
+
+const columns: DataTableColumns = [
+  {
+    key: 'title',
+    title: '名称',
+    render(rowData) {
+      if (rowData.type === '文件夹') {
+        return (
+          <NButton text size="large" onClick={() => workspaceStore.push(rowData.title as string)}>
+            {{
+              icon: () => (
+                <NIcon>
+                  <Folder />
+                </NIcon>
+              ),
+              default: () => rowData.title
+            }}
+          </NButton>
+        )
+      } else {
+        return (
+          <NButton text size="large">
+            {{
+              icon: () => (
+                <NIcon>
+                  <File />
+                </NIcon>
+              ),
+              default: () => rowData.title
+            }}
+          </NButton>
+        )
+      }
+    }
+  },
+  {
+    key: 'type',
+    title: '类型',
+    width: 85
+  },
+  {
+    title: '操作',
+    key: 'operation',
+    fixed: 'right',
+    width: 50,
+    render() {
+      return (
+        <NButton type="primary" circle>
+          {{
+            icon: () => (
+              <NIcon>
+                <OverflowMenuHorizontal />
+              </NIcon>
+            )
+          }}
+        </NButton>
+      )
+    }
+  }
+]
+</script>
+
+<template>
+  <div class="padding page">
+    <NH1>工作台</NH1>
+    <NText>{{ workspaceStore.path }}</NText>
+    <NDataTable
+      :loading="DATALoading"
+      style="margin-top: 20px"
+      size="large"
+      :data="DATA"
+      :columns="columns"
+    />
+  </div>
+</template>

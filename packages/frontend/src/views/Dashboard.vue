@@ -1,28 +1,22 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="tsx">
-import { NDivider, NGi, NGrid, NProgress, NSpace, useMessage, useThemeVars } from 'naive-ui'
+import { NDivider, NGi, NGrid, NProgress, NSpace, useThemeVars } from 'naive-ui'
 import LargeHeader from '@/components/LargeHeader.vue'
 import { useServer } from '@/stores/servers'
 import { useRouter } from 'vue-router'
 import { Exit } from '@vicons/carbon'
 import { DashboardAPI } from '@/apis/Dashboard'
 import { ref } from 'vue'
-import Tab from '@/templates/common/Tab.vue'
 import Progress from '@/components/Progress.vue'
 import SmallCard from '@/components/SmallCard.vue'
 import InfoCard from '@/templates/dashboard/InfoCard.vue'
+import BigCard from '@/components/BigCard.vue'
 
 const server = useServer()
 const now = server.now - 1
 const router = useRouter()
-const message = useMessage()
 const themeVars = useThemeVars()
 const dashboard = new DashboardAPI(server.servers[now].url, server.servers[now].key)
-
-if (server.now === 0) {
-  message.error('请重新选择服务器')
-  router.push('/servers')
-}
 
 const cpuCoreUse = ref<number[]>([])
 const memUse = ref({
@@ -42,21 +36,31 @@ const serverInfo = ref({
     data: {
       username: ''
     }
-  }
+  },
+  site_total: 0,
+  database_total: 0,
+  ftp_total: 0,
+  disk: [
+    {
+      filesystem: '',
+      type: '',
+      path: '',
+      size: ['', '', '', ''],
+      inodes: ['', '', '', '']
+    }
+  ]
 })
 const onLoad = async () => {
   const network = await dashboard.getNetWork()
   cpuCoreUse.value = network.cpu[2]
   memUse.value = network.mem
   serverInfo.value = network
-  console.log(network)
 }
 setInterval(() => onLoad(), 1000)
 </script>
 
 <template>
   <div class="padding page">
-    <Tab />
     <LargeHeader
       title="主页"
       :button="Exit"
@@ -81,7 +85,7 @@ setInterval(() => onLoad(), 1000)
           :percentage="parseFloat(((memUse.memRealUsed / memUse.memTotal) * 100).toFixed(1))"
         />
       </NSpace>
-      <NGrid cols="2" :x-gap="10" :y-gap="10">
+      <NGrid cols="2" :x-gap="20" :y-gap="20">
         <NGi>
           <SmallCard title="已用" :count="memUse.memRealUsed" />
         </NGi>
@@ -96,6 +100,17 @@ setInterval(() => onLoad(), 1000)
         </NGi>
       </NGrid>
     </NSpace>
+    <NGrid :cols="3" :x-gap="20" style="margin-top: 20px">
+      <NGi>
+        <BigCard title="网站" :count="serverInfo.site_total" />
+      </NGi>
+      <NGi>
+        <BigCard title="数据库" :count="serverInfo.database_total" />
+      </NGi>
+      <NGi>
+        <BigCard title="网站" :count="serverInfo.ftp_total" />
+      </NGi>
+    </NGrid>
     <NSpace style="margin-top: 20px">
       <InfoCard :net-percentage="serverInfo" />
     </NSpace>

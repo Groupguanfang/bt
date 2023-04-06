@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { NCard, NH3, NH5, NIcon, NSpace, NTable } from 'naive-ui'
 import CentOS from '@/assets/CentOS.vue'
 import Ubuntu from '@/assets/Ubuntu.vue'
 import Debian from '@/assets/Debian.vue'
 import Linux from '@/assets/Linux.vue'
-import { NCard, NH3, NH5, NIcon, NSpace, NTable } from 'naive-ui'
+
 const props = defineProps<{
   netPercentage: {
     system: string

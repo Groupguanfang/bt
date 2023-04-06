@@ -3,6 +3,15 @@ import proxy from "./proxy/proxy";
 const app = express();
 
 app.use((req, res, next) => {
+  if (req.method === "OPTIONS") {
+    return res
+      .header("Access-Control-Allow-Origin", "*")
+      .header("Access-Control-Allow-Credentials", "true")
+      .header("Access-Control-Allow-Headers", "*")
+      .header("Access-Control-Allow-Methods", "*")
+      .status(200)
+      .send();
+  }
   res
     .header("X-Powered-By", "Nai Feature")
     .header("Access-Control-Allow-Origin", req.headers.origin)
@@ -13,10 +22,10 @@ app.use((req, res, next) => {
       "POST, HEAD, PATCH, GET, OPTIONS, PUT, DELETE"
     )
     .header("Accept", "*/*");
-  if (req.method === "OPTIONS") return res.status(200).send();
   next();
 });
 
+app.use(express.urlencoded());
 app.get("/", (req, res) => {
   res.send("Baota Backend Started");
 });

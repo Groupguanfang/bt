@@ -14,6 +14,9 @@ export default router.all("/proxy", async (req, res) => {
       params: query,
       data: body,
       method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
     });
     return res.send(data.data);
   } catch (err: any) {
