@@ -1,10 +1,18 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="tsx">
-import { NButton, NDataTable, NIcon, NText, type DataTableColumns } from 'naive-ui'
+import {
+  NButton,
+  NDataTable,
+  NIcon,
+  NSpace,
+  NText,
+  useMessage,
+  type DataTableColumns
+} from 'naive-ui'
 import { WorkspaceAPI } from '@/apis/Workspace'
 import { useServer } from '@/stores/servers'
 import { useWorkspace } from '@/stores/workspace'
-import { OverflowMenuHorizontal } from '@vicons/carbon'
+import { ArrowLeft, ArrowRight, OverflowMenuHorizontal } from '@vicons/carbon'
 import Folder from '@/assets/workspace/Folder.vue'
 import File from '@/assets/workspace/File.vue'
 import { computed, onMounted, ref, watch } from 'vue'
@@ -12,6 +20,7 @@ import Header from '@/components/Header.vue'
 
 const server = useServer()
 const workspaceStore = useWorkspace()
+const message = useMessage()
 const now = server.now - 1
 const workspace = new WorkspaceAPI(server.servers[now].url, server.servers[now].key)
 
@@ -106,12 +115,29 @@ const columns: DataTableColumns = [
     }
   }
 ]
+
+const back = () => {
+  const data = workspaceStore.back()
+  if (!data) message.error('已经是根目录了')
+}
 </script>
 
 <template>
   <div>
     <Header @close="emits('close')"> 文件 </Header>
-    <div class="padding page">
+    <div class="padding">
+      <NSpace class="bottom">
+        <NButton @click="back" circle type="primary">
+          <template #icon>
+            <NIcon :component="ArrowLeft" />
+          </template>
+        </NButton>
+        <NButton circle>
+          <template #icon>
+            <NIcon :component="ArrowRight" />
+          </template>
+        </NButton>
+      </NSpace>
       <NText>{{ workspaceStore.path }}</NText>
       <NDataTable
         :loading="DATALoading"
@@ -123,3 +149,9 @@ const columns: DataTableColumns = [
     </div>
   </div>
 </template>
+
+<style lang="less" scoped>
+.bottom {
+  margin-bottom: 10px;
+}
+</style>
