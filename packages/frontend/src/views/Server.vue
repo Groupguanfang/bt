@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="tsx">
 import {
   NButton,
@@ -16,22 +15,17 @@ import Header from '@/components/Header.vue'
 import { useServer } from '@/stores/servers'
 import isURL from 'validator/es/lib/isURL'
 import { Add, ChevronRight } from '@vicons/carbon'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import LargeHeader from '@/components/LargeHeader.vue'
+import { changeBackground } from '@/hooks/changeBackground'
 
 const server = useServer()
 const router = useRouter()
 const message = useMessage()
 
 const showAddServerDrawer = ref(false)
-watch(showAddServerDrawer, () => {
-  if (showAddServerDrawer.value === true) {
-    document.documentElement.style.background = '#2c2c32'
-  } else {
-    document.documentElement.style.background = '#121212'
-  }
-})
+changeBackground(showAddServerDrawer)
 
 const url = ref<string>()
 const key = ref<string>()

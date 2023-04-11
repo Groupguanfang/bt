@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="tsx">
-import { NButton, NDataTable, NH1, NIcon, NText, type DataTableColumns } from 'naive-ui'
+import { NButton, NDataTable, NIcon, NText, type DataTableColumns } from 'naive-ui'
 import { WorkspaceAPI } from '@/apis/Workspace'
 import { useServer } from '@/stores/servers'
 import { useWorkspace } from '@/stores/workspace'
@@ -8,6 +8,7 @@ import { OverflowMenuHorizontal } from '@vicons/carbon'
 import Folder from '@/assets/workspace/Folder.vue'
 import File from '@/assets/workspace/File.vue'
 import { computed, onMounted, ref, watch } from 'vue'
+import Header from '@/components/Header.vue'
 
 const server = useServer()
 const workspaceStore = useWorkspace()
@@ -16,6 +17,7 @@ const workspace = new WorkspaceAPI(server.servers[now].url, server.servers[now].
 
 const DATA = ref<any[]>([])
 const DATALoading = ref(false)
+const emits = defineEmits(['close'])
 
 const onLoad = async (path: string = workspaceStore.path) => {
   DATALoading.value = true
@@ -107,15 +109,17 @@ const columns: DataTableColumns = [
 </script>
 
 <template>
-  <div class="padding page">
-    <NH1>工作台</NH1>
-    <NText>{{ workspaceStore.path }}</NText>
-    <NDataTable
-      :loading="DATALoading"
-      style="margin-top: 20px"
-      size="large"
-      :data="DATA"
-      :columns="columns"
-    />
+  <div>
+    <Header @close="emits('close')"> 文件 </Header>
+    <div class="padding page">
+      <NText>{{ workspaceStore.path }}</NText>
+      <NDataTable
+        :loading="DATALoading"
+        style="margin-top: 20px"
+        size="large"
+        :data="DATA"
+        :columns="columns"
+      />
+    </div>
   </div>
 </template>

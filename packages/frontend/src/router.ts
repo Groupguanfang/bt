@@ -4,6 +4,11 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      name: '/',
+      path: '/',
+      component: () => import('./index.vue')
+    },
+    {
       name: '服务器管理页',
       path: '/servers',
       component: () => import('./views/Server.vue')
@@ -21,7 +26,7 @@ const router = createRouter({
         {
           name: '工作',
           path: '/workspace',
-          component: () => import('./views/Workspace.vue')
+          component: () => import('./views/Workspace/Editor.vue')
         },
         {
           name: '数据',
