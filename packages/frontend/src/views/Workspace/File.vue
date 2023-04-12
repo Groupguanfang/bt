@@ -26,7 +26,7 @@ const workspace = new WorkspaceAPI(server.servers[now].url, server.servers[now].
 
 const DATA = ref<any[]>([])
 const DATALoading = ref(false)
-const emits = defineEmits(['close'])
+const emits = defineEmits(['close', 'open'])
 
 const onLoad = async (path: string = workspaceStore.path) => {
   DATALoading.value = true
@@ -76,7 +76,11 @@ const columns: DataTableColumns = [
         )
       } else {
         return (
-          <NButton text size="large">
+          <NButton
+            text={true}
+            size="large"
+            onClick={() => emits('open', workspaceStore.path + '/' + rowData.title)}
+          >
             {{
               icon: () => (
                 <NIcon>

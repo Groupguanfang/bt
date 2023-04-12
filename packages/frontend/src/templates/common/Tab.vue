@@ -24,7 +24,7 @@ const defaultValue = () => {
 </script>
 
 <template>
-  <Teleport to="body">
+  <Teleport to="body" v-if="route.path !== '/workspace'">
     <NAffix class="tab-container" :trigger-bottom="9999999" :bottom="0">
       <NTabs
         :default-value="defaultValue()"

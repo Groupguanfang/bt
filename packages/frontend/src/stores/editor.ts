@@ -5,6 +5,7 @@ interface useEditorState {
     type: 'home' | 'editor'
     name: string
     index: number
+    path?: string
   }[]
   nowTab: number
 }
