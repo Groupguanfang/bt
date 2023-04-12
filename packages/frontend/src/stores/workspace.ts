@@ -8,11 +8,12 @@ export const useWorkspace = defineStore('workspace', {
     }
   },
   actions: {
-    push(folderName: string) {
+    push(path: string) {
+      this.history.push(this.path)
       if (this.path === '/') {
-        this.path = this.path + folderName
+        this.path = this.path + path
       } else {
-        this.path = this.path + '/' + folderName
+        this.path = this.path + '/' + path
       }
     },
     back(): boolean {

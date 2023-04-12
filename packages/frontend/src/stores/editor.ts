@@ -7,7 +7,7 @@ interface useEditorState {
     index: number
     path?: string
   }[]
-  nowTab: number
+  nowTab: string | 0
 }
 
 export const useEditor = defineStore('editor', {
@@ -20,7 +20,7 @@ export const useEditor = defineStore('editor', {
           index: 0
         }
       ],
-      nowTab: 0
+      nowTab: '新标签页'
     }
   },
   persist: {

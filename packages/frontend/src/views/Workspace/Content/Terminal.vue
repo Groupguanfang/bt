@@ -7,12 +7,14 @@ import { onMounted } from 'vue'
 import { WorkspaceAPI } from '@/apis/Workspace'
 import { useServer } from '@/stores/servers'
 import { NButton, NSpace, useMessage } from 'naive-ui'
+import config from '@/config/config'
 
 const server = useServer()
 const message = useMessage()
 const now = server.now - 1
 
 let terminalInstance: Terminal
+let socket: WebSocket
 const paste = async () => {
   try {
     const text = await navigator.clipboard.readText()
@@ -22,11 +24,13 @@ const paste = async () => {
   }
 }
 
+const ctrlc = () => socket.send('')
+
 const initTerminal = async () => {
   const workSpaceAPI = new WorkspaceAPI(server.servers[now].url, server.servers[now].key)
   const terminalPID = await workSpaceAPI.getTerminal()
   const fitAddon = new FitAddon()
-  const socket = new WebSocket('ws://192.168.0.174:3400/socket/' + terminalPID)
+  socket = new WebSocket(`ws://${config.serverURL}/socket/` + terminalPID)
 
   const attachAddon = new AttachAddon(socket)
   terminalInstance = new Terminal({ cursorBlink: true })
@@ -49,6 +53,7 @@ onMounted(initTerminal)
     <NSpace size="small" id="operation">
       <NButton @click="paste">粘贴</NButton>
       <NButton @click="terminalInstance.clear()">清屏</NButton>
+      <NButton @click="ctrlc">Ctrl + C</NButton>
     </NSpace>
   </div>
 </template>

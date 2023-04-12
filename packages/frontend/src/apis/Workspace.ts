@@ -1,4 +1,5 @@
 import { Baota } from '@/utils/request'
+import config from '@/config/config'
 
 export class WorkspaceAPI extends Baota {
   /**
@@ -17,21 +18,38 @@ export class WorkspaceAPI extends Baota {
     })
     return data.data
   }
-  /*
-  export async function newTerminal(host: string): Promise<number> {
-    const data = await axios({
-      baseURL: host,
-      url: "/terminal",
-      method: "POST",
-    });
-    return data.data;
-  }*/
 
   public async getTerminal() {
     const data = await this.request({
-      baseURL: 'http://192.168.0.174:3400/terminal',
+      baseURL: `http://${config.serverURL}/terminal`,
       method: 'POST'
     })
     return data.data
+  }
+
+  public async getFileBody(path: string) {
+    const data = await this.request({
+      params: {
+        nai_baota: this.baseURL + `/files?action=GetFileBody`
+      },
+      data: {
+        path: path
+      }
+    })
+    return data.data
+  }
+
+  public async saveFileBody(data: string, path: string) {
+    const req = await this.request({
+      params: {
+        nai_baota: this.baseURL + `/files?action=SaveFileBody`
+      },
+      data: {
+        path: path,
+        data: data,
+        encoding: 'utf-8'
+      }
+    })
+    return req.data
   }
 }
