@@ -39,9 +39,9 @@ const router = createRouter({
           component: () => import('./views/Task.vue')
         },
         {
-          name: '商店',
-          path: '/store',
-          component: () => import('./views/Store.vue')
+          name: '设置',
+          path: '/setting',
+          component: () => import('./views/Setting.vue')
         }
       ]
     }

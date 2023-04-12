@@ -6,7 +6,7 @@ const emits = defineEmits(['open', 'terminal'])
 </script>
 
 <template>
-  <div class="padding">
+  <div class="padding page">
     <NH1 class="headingDisableMargin">开始</NH1>
     <NText strong style="font-size: 20px" :depth="3">编辑进化</NText>
 

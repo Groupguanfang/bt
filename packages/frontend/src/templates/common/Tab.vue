@@ -11,7 +11,7 @@ const update = (value: string) => {
   if (value === '工作') router.push('/workspace')
   if (value === '数据') router.push('/data')
   if (value === '任务') router.push('/task')
-  if (value === '商店') router.push('/store')
+  if (value === '商店') router.push('/setting')
 }
 
 const defaultValue = () => {
@@ -19,7 +19,7 @@ const defaultValue = () => {
   if (route.path === '/workspace') return '工作'
   if (route.path === '/data') return '数据'
   if (route.path === '/task') return '任务'
-  if (route.path === '/store') return '商店'
+  if (route.path === '/setting') return '设置'
 }
 </script>
 
@@ -37,7 +37,7 @@ const defaultValue = () => {
         <NTab name="工作" />
         <NTab name="数据" />
         <NTab name="任务" />
-        <NTab name="商店" />
+        <NTab name="设置" />
       </NTabs>
     </NAffix>
   </Teleport>
